@@ -4,6 +4,7 @@ import pygame
 
 from src.player import Player
 from src.projectile import Projectile
+from src.slime import Slime
 
 if __name__ == '__main__':
     pygame.init()
@@ -13,6 +14,7 @@ if __name__ == '__main__':
     # player = Player(1920//2, 1200//2, 32, 42)
     player = Player(1920 // 2, 1200 // 2, 42, 52)
 
+    enemies = [Slime(400, 300)]
     player_projectiles = []
 
     display_scroll = [0, 0]
@@ -61,6 +63,9 @@ if __name__ == '__main__':
 
         for p in player_projectiles:
             p.draw(display)
+        for enemy in enemies:
+            enemy.draw(display, display_scroll, player)
+
         pygame.draw.rect(display, (255, 255, 255), (100 - display_scroll[0], 100 - display_scroll[1], 16, 16))
         player.draw(display)
 
