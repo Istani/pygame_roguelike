@@ -3,7 +3,7 @@ import pygame
 
 class Player:
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, name):
         self.x = x
         self.y = y
         self.width = width
@@ -15,6 +15,8 @@ class Player:
         self.animation_counter = 0
         self.moving_right = False
         self.moving_left = False
+        self.name = name
+        self.mask = pygame.mask.from_surface(self.walk_images[0])
 
     def draw(self, display):
         if self.__animation_index > 3:
@@ -22,7 +24,7 @@ class Player:
 
         img = self.walk_images[self.__animation_index]
 
-        img = pygame.transform.scale(img, (self.width , self.height))
+        img = pygame.transform.scale(img, (self.width, self.height))
         if self.moving_left:
             img = pygame.transform.flip(img, flip_x=True, flip_y=False)
         display.blit(img, (self.x, self.y))
