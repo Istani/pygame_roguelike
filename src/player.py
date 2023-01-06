@@ -17,8 +17,16 @@ class Player:
         self.moving_left = False
         self.name = name
         self.mask = pygame.mask.from_surface(self.walk_images[0])
+        self.kills = 0
+        self.live = 100
+        self.alive = True
 
     def draw(self, display):
+        if not self.alive:
+            return
+
+        if self.live <= 0:
+            self.alive = False
         if self.__animation_index > 3:
             self.__animation_index = 0
 
