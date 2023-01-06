@@ -1,3 +1,4 @@
+import random
 import sys
 
 import pygame
@@ -11,17 +12,20 @@ if __name__ == '__main__':
     pygame.init()
     pygame.font.init()
 
-    display = pygame.display.set_mode((1920, 1200))
+    wight = 1920
+    height = 1200
+    n_enemies = 3
+    max_enemies = 25
+
+    display = pygame.display.set_mode((wight, height))
     clock = pygame.time.Clock()
-    player = Player(1920 // 2, 1200 // 2, 42, 52, "Sandro")
-    gui = GUI(display, player)
+    player = Player(wight // 2, height // 2, 42, 52, "Sandro")
+    gui = GUI(display, player, center=[wight // 2, height // 2])
 
     tree = pygame.image.load("../assets/tree_2.png")
     tree = pygame.transform.scale(tree, (150, 250))
 
-    enemies = [Slime(400, 300, display),
-               Slime(700, 500, display),
-               Slime(900, 100, display)]
+    enemies = []
     player_projectiles = []
 
     display_scroll = [0, 0]
@@ -29,9 +33,16 @@ if __name__ == '__main__':
     while True:
 
         player_projectiles = [p for p in player_projectiles if p.alive]
-        enemies = [ e for e in enemies if e.alive]
 
+        for e in enemies:
+            if not e.alive:
+                n_enemies += 2
+        if n_enemies > max_enemies:
+            n_enemies = max_enemies
+        enemies = [e for e in enemies if e.alive]
 
+        if len(enemies) < n_enemies:
+            enemies += [Slime(random.randint(0, wight), random.randint(0, height), display)]
 
         display.fill((23, 164, 86))
 
@@ -43,36 +54,39 @@ if __name__ == '__main__':
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    player_projectiles.append(Projectile(x=player.x, y=player.y, y_mouse=mouse_y, x_mouse=mouse_x, size=25, speed=10))
+                    player_projectiles.append(
+                        Projectile(x=player.x, y=player.y, y_mouse=mouse_y, x_mouse=mouse_x, size=25,
+                                   speed=10))
                 if event.button == 3:
                     player_projectiles.append(
-                        Projectile(x=player.x, y=player.y, y_mouse=mouse_y, x_mouse=mouse_x, color=(0, 0, 255), speed=5,
-                                   size=45))
+                        Projectile(x=player.x, y=player.y, y_mouse=mouse_y, x_mouse=mouse_x,
+                                   color=(0, 0, 255), speed=5,
+                                   size=145))
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
             display_scroll[0] -= 5
-            #for p in player_projectiles:
-                #p.x += 5
+            for p in player_projectiles:
+                p.x += 5
             player.animation_counter += 10
             player.moving_left = True
             player.moving_right = False
         if keys[pygame.K_d]:
             display_scroll[0] += 5
-            #for p in player_projectiles:
-                #p.x -= 5
+            for p in player_projectiles:
+                p.x -= 5
             player.animation_counter += 10
             player.moving_right = True
             player.moving_left = False
 
         if keys[pygame.K_w]:
             display_scroll[1] -= 5
-            #for p in player_projectiles:
-               # p.x += 5
+            for p in player_projectiles:
+                p.x += 5
         if keys[pygame.K_s]:
             display_scroll[1] += 5
-            #for p in player_projectiles:
-                # p.x -= 5
+            for p in player_projectiles:
+                p.x -= 5
 
         for p in player_projectiles:
             p.draw(display, enemies)
