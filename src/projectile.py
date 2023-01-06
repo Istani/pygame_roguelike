@@ -4,7 +4,7 @@ import math
 
 class Projectile:
 
-    def __init__(self, x, y, x_mouse, y_mouse, color=(255, 0, 0), speed=15, size=5):
+    def __init__(self, x, y, x_mouse, y_mouse,  color=(255, 0, 0), speed=15, size=5):
         self.x = x
         self.y = y
         self.x_mouse = x_mouse
@@ -27,11 +27,11 @@ class Projectile:
     def draw(self, display, enemies):
         if not self.alive:
             return
-        for e in enemies:
-            offset_x = self.x - e.x
-            offset_y = self.y - e.y
-            if e.mask.overlap(self.mask, (offset_x, offset_y)) is not None:
-                self.alive = False
+        #for e in enemies:
+        #    offset_x = self.x - e.x
+        #    offset_y = self.y - e.y
+        #    if e.mask.overlap(self.mask, (offset_x, offset_y)) is not None:
+        #        self.alive = False
         self.x -= int(self.x_vel)
         self.y -= int(self.y_vel)
 
