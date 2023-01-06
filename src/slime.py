@@ -20,10 +20,19 @@ class Slime:
         if not self.alive:
             return
         for p in player_projectiles:
-            offset_x = p.x - self.x +  display_scroll[0]
+            offset_x = p.x - self.x + display_scroll[0]
             offset_y = p.y - self.y + display_scroll[1]
             if p.mask.overlap(self.mask, (offset_x, offset_y)) is not None:
                 self.alive = False
+                p.alive = False
+                player.kills += 1
+
+        # player dmg?
+        offset_x = player.x - self.x + display_scroll[0]
+        offset_y = player.y - self.y + display_scroll[1]
+        if player.mask.overlap(self.mask, (offset_x, offset_y)) is not None:
+            player.live -= 1
+
 
         if self.animation_count + 1 == 16:
             self.animation_count = 0
