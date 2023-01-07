@@ -9,6 +9,7 @@ from src.gui import GUI
 from src.projectile import Projectile
 from src.tree import Tree
 from src.enemy import Enemy
+from src.ai import AI
 
 
 class Game:
@@ -39,12 +40,19 @@ class Game:
         for _ in range(self.n_enemies):
             self.word.enemies.append(
                 Enemy(x=random.randint(0, self.wight), y=random.randint(0, self.height), display=self.display,
-                      enemy_images=self.assets.slime_images))
+                      enemy_images=self.assets.slime_images, hit_sound=self.assets.hit_sound, ai=AI()))
+
+    def spawn_enemies(self):
+        for i in range(len(self.word.enemies), self.n_enemies):
+            self.word.enemies.append(
+                Enemy(x=random.randint(0, self.wight), y=random.randint(0, self.height), display=self.display,
+                      enemy_images=self.assets.slime_images, hit_sound=self.assets.hit_sound, ai=AI()))
 
     def main_loop(self):
         self.assets.background_music.play(loops=-1)
         self.assets.background_music.set_volume(0.7)
         while True:
+            self.spawn_enemies()
             keys = pygame.key.get_pressed()
             mouse_x, mouse_y = pygame.mouse.get_pos()
             self.display.fill(self.background_color)
@@ -56,7 +64,9 @@ class Game:
                     if event.button == 1 or event.button == 3:
                         self.assets.peng_sound.play()
                         self.word.projectiles.append(
-                            Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, size=25, speed=10))
+                            Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
+                                       animation_images=self.assets.projectile_images))
+            self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
             self.player.move(keys)
             self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y)
             self.gui.draw()
