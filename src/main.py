@@ -9,28 +9,40 @@ from src.slime import Slime
 from src.gui import GUI
 
 if __name__ == '__main__':
-    pygame.init()
-    pygame.font.init()
 
+    pygame.font.init()
+    pygame.mixer.init()
+    music = pygame.mixer.Sound("../assets/sounds/ohyeah.wav")
+    peng = pygame.mixer.Sound("../assets/sounds/peng.wav")
+    aua = pygame.mixer.Sound("../assets/sounds/aua.wav")
+
+
+    pygame.init()
     wight = 1920
     height = 1200
     n_enemies = 3
     max_enemies = 25
+    stop = False
 
     display = pygame.display.set_mode((wight, height))
     clock = pygame.time.Clock()
     player = Player(wight // 2, height // 2, 42, 52, "Sandro")
     gui = GUI(display, player, center=[wight // 2, height // 2])
 
-    tree = pygame.image.load("../assets/tree_2.png")
+    tree = pygame.image.load("../assets/environment/tree.png")
     tree = pygame.transform.scale(tree, (150, 250))
 
     enemies = []
     player_projectiles = []
+    enemy_projectiles = []
 
     display_scroll = [0, 0]
 
+    music.play(loops=-1)
+    music.set_volume(0.7)
     while True:
+
+        keys = pygame.key.get_pressed()
 
         player_projectiles = [p for p in player_projectiles if p.alive]
 
@@ -53,17 +65,13 @@ if __name__ == '__main__':
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
+                if event.button == 1 or event.button == 3:
+                    peng.play()
                     player_projectiles.append(
                         Projectile(x=player.x, y=player.y, y_mouse=mouse_y, x_mouse=mouse_x, size=25,
                                    speed=10))
-                if event.button == 3:
-                    player_projectiles.append(
-                        Projectile(x=player.x, y=player.y, y_mouse=mouse_y, x_mouse=mouse_x,
-                                   color=(0, 0, 255), speed=5,
-                                   size=145))
 
-        keys = pygame.key.get_pressed()
+
         if keys[pygame.K_a]:
             display_scroll[0] -= 5
             for p in player_projectiles:
@@ -88,10 +96,13 @@ if __name__ == '__main__':
             for p in player_projectiles:
                 p.x -= 5
 
+
+
+
         for p in player_projectiles:
             p.draw(display, enemies)
         for enemy in enemies:
-            enemy.draw(display_scroll, player, player_projectiles)
+            enemy.draw(display_scroll, player, player_projectiles, aua)
 
         player.draw(display)
         display.blit(tree, (100 - display_scroll[0], 100 - display_scroll[1], 16, 16))
