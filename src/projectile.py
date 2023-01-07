@@ -4,7 +4,7 @@ import math
 
 class Projectile:
 
-    def __init__(self, x, y, x_mouse, y_mouse, color=(255, 0, 0), speed=15, size=5):
+    def __init__(self, x, y, x_mouse, y_mouse, player, color=(255, 0, 0), speed=15, size=5):
         self.x = x
         self.y = y
         self.x_mouse = x_mouse
@@ -23,6 +23,7 @@ class Projectile:
         self.mask = pygame.mask.from_surface(self.animation_images[0])
         self.__animation_index = 0
         self.animation_counter = 0
+        self.player = player
 
     def draw(self, display, display_scroll=None):
         if display_scroll is None:
