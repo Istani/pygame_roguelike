@@ -1,2 +1,11 @@
 .idea*
 *.pyc
+*.toc
+*.spec
+*.mainfest
+*.zip
+*.html
+*.pyz
+.pkg
+build/*
+*.exe
