@@ -14,8 +14,9 @@ class GUI:
     def draw(self):
         if not self.player.alive:
             game_over = self.game_over_font.render("GAME OVER!", True, (255, 255, 255))
-            self.display.blit(game_over, (self.center[0]-400, self.center[1]-250))
-            self.display.blit(self.main_font.render(str(self.player.kills) + " kills", True, (255, 255, 255)), (self.center[0], self.center[1]))
+            self.display.blit(game_over, (self.center[0] - 400, self.center[1] - 250))
+            self.display.blit(self.main_font.render(str(self.player.kills) + " kills", True, (255, 255, 255)),
+                              (self.center[0], self.center[1]))
             return
         player_name = self.main_font.render(self.player.name, True, (255, 255, 255))
         kills = self.main_font.render(str(self.player.kills), True, (255, 255, 255))
