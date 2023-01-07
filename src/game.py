@@ -22,31 +22,36 @@ class Game:
         self.word = World()
         self.wight = wight
         self.height = height
-        self.n_enemies = 3
-        self.max_enemies = 25
+        self.n_enemies = 10
         self.display = pygame.display.set_mode((wight, height))
         self.clock = pygame.time.Clock()
         self.center_x = self.wight // 2
         self.center_y = self.height // 2
         self.player = Player(self.center_x, self.center_y, player_name, self.assets.player_images, self.display)
         self.gui = GUI(self.display, self.player, center=[self.center_x, self.center_y])
-        self.background_color = (23, 164, 86)
+        self.background_color = (23, 144, 86)
         self.fps = fps
         self.init_spawn()
 
     def init_spawn(self):
         self.word.players.append(self.player)
         self.word.trees.append(Tree(display=self.display, x=100, y=100, image=self.assets.tree))
-        for _ in range(self.n_enemies):
-            self.word.enemies.append(
-                Enemy(x=random.randint(0, self.wight), y=random.randint(0, self.height), display=self.display,
-                      enemy_images=self.assets.slime_images, hit_sound=self.assets.hit_sound, ai=AI()))
 
     def spawn_enemies(self):
         for i in range(len(self.word.enemies), self.n_enemies):
+            rd = random.randint(1, 4)
+            if rd == 1:
+                enemy_imgs = self.assets.penis_images
+            elif rd == 2:
+                enemy_imgs = self.assets.ass_images
+            elif rd == 3:
+                enemy_imgs = self.assets.snake_images
+            else:
+                enemy_imgs = self.assets.slime_images
+
             self.word.enemies.append(
                 Enemy(x=random.randint(0, self.wight), y=random.randint(0, self.height), display=self.display,
-                      enemy_images=self.assets.slime_images, hit_sound=self.assets.hit_sound, ai=AI()))
+                      enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI()))
 
     def main_loop(self):
         self.assets.background_music.play(loops=-1)
