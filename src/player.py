@@ -3,13 +3,11 @@ import pygame
 
 class Player:
 
-    def __init__(self, x, y, width, height, name):
+    def __init__(self, x, y, name, player_images, display):
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
         self.color = (255, 0, 0)
-        self.walk_images = [pygame.image.load(f"../assets/player/player_walk_{i}.png") for i in range(4)]
+        self.walk_images = player_images
         self.__animation_delay = 60
         self.__animation_index = 0
         self.animation_counter = 0
@@ -20,23 +18,37 @@ class Player:
         self.kills = 0
         self.live = 100
         self.alive = True
+        self.display_scroll_x = 0
+        self.display_scroll_y = 0
+        self.display = display
 
-    def draw(self, display):
+    def move(self, keys):
+        if keys[pygame.K_a]:
+            self.display_scroll_x -= 5
+            self.animation_counter += 10
+            self.moving_left = True
+            self.moving_right = False
+        if keys[pygame.K_d]:
+            self.display_scroll_x += 5
+            self.animation_counter += 10
+            self.moving_right = True
+            self.moving_left = False
+        if keys[pygame.K_w]:
+            self.display_scroll_y -= 5
+        if keys[pygame.K_s]:
+            self.display_scroll_y += 5
+
+    def draw(self):
         if not self.alive:
             return
-
         if self.live <= 0:
             self.alive = False
         if self.__animation_index > 3:
             self.__animation_index = 0
-
         img = self.walk_images[self.__animation_index]
-
-        img = pygame.transform.scale(img, (self.width, self.height))
         if self.moving_left:
             img = pygame.transform.flip(img, flip_x=True, flip_y=False)
-        display.blit(img, (self.x, self.y))
-
+        self.display.blit(img, (self.x, self.y))
         self.animation_counter += 1
         if self.animation_counter > self.__animation_delay:
             self.__animation_index += 1
