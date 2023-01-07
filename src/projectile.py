@@ -4,20 +4,18 @@ import math
 
 class Projectile:
 
-    def __init__(self, x_mouse, y_mouse, player, color=(255, 0, 0), speed=15, size=5):
+    def __init__(self, x_mouse, y_mouse, player, animation_images, color=(255, 0, 0), speed=15, ):
         self.x = int(player.x)
         self.y = int(player.y)
         self.x_mouse = x_mouse
         self.y_mouse = y_mouse
         self.color = color
         self.speed = speed
-        self.size = size
         self.angle = math.atan2(self.y - y_mouse, self.x  - x_mouse)
         self.x_vel = math.cos(self.angle) * self.speed
         self.y_vel = math.sin(self.angle) * self.speed
         self.alive = True
-        self.animation_images = [pygame.image.load(f"../assets/projectiles/fire_bullet_{i}.png") for i in range(1, 4)]
-        self.animation_images = [pygame.transform.scale(i, (self.size, self.size)) for i in self.animation_images]
+        self.animation_images = animation_images
         self.__animation_delay = 30
 
         self.mask = pygame.mask.from_surface(self.animation_images[0])
