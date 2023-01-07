@@ -3,7 +3,7 @@ import pygame
 
 class Enemy:
 
-    def __init__(self, x, y, display, enemy_images):
+    def __init__(self, x, y, display, enemy_images,hit_sound, ai):
         self.x = x
         self.y = y
         self.animation_images = enemy_images
@@ -14,6 +14,8 @@ class Enemy:
         self.display = display
         self.alive = True
         self.live = 100
+        self.hit_sound = hit_sound
+        self.ai = ai
 
     def draw(self, display_scroll_x, display_scroll_y):
         if not self.alive:
