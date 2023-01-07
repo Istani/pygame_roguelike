@@ -4,12 +4,10 @@ import random
 
 class Slime:
 
-    def __init__(self, x, y, display):
+    def __init__(self, x, y, display, slime_images):
         self.x = x
         self.y = y
-        self.animation_images = [pygame.image.load(f"../assets/slime/slime_animation_{i}.png") for i in range(4)]
-        self.animation_images = [pygame.image.load(f"../assets/valu/l0_sprite_{i}.png") for i in range(1, 6)]
-
+        self.animation_images = slime_images
         self.animation_count = 0
         self.reset_offset = 0
         self.offset_x = random.randrange(-300, 300)
