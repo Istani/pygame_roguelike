@@ -16,6 +16,7 @@ class Enemy:
         self.live = 100
         self.hit_sound = hit_sound
         self.ai = ai
+        self.flip = False
 
     def draw(self, display_scroll_x, display_scroll_y):
         if not self.alive:
@@ -26,5 +27,8 @@ class Enemy:
                 self.animation_index = 0
             self.timer_index = -1
         self.timer_index += 1
-        self.display.blit(self.animation_images[self.animation_index],
-                          (self.x - display_scroll_x, self.y - display_scroll_y))
+        img = self.animation_images[self.animation_index]
+        img = pygame.transform.flip(img, flip_x=self.flip, flip_y=False)
+        self.display.blit(img,(self.x - display_scroll_x, self.y - display_scroll_y))
+        
+

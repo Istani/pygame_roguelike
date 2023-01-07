@@ -24,8 +24,10 @@ class AI:
             self.reset()
         if player.x + self.offset_x > enemy.x - player.display_scroll_x:
             enemy.x += 1
+            enemy.flip = False
         elif player.x + self.offset_x < enemy.x - player.display_scroll_x:
             enemy.x -= 1
+            enemy.flip = True
 
         if player.y + self.offset_y > enemy.y - player.display_scroll_y:
             enemy.y += 1
