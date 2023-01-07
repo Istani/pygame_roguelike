@@ -6,10 +6,12 @@ class GUI:
     def __init__(self, display, player, center):
         self.main_font = pygame.font.SysFont("comicsans", 20)
         self.game_over_font = pygame.font.SysFont("comicsans", 100)
+        self.credits = pygame.font.SysFont("comicsans", 30)
 
         self.display = display
         self.player = player
         self.center = center
+        self.credit_str = "BobSan - programming * Dupomat - art * yunkeed - sound"
 
     def draw(self):
         if not self.player.alive:
@@ -24,6 +26,9 @@ class GUI:
             c = (255, 0, 0)
         else:
             c = (255, 255, 255)
+
+        cd = self.credits.render(self.credit_str,True, (255, 255, 255))
+        self.display.blit(cd,(self.center[0] - 400, 10))
         live = self.main_font.render(str(self.player.live) + " /100 HP", True, c)
         self.display.blit(player_name, (self.player.x - 15, self.player.y - 28))
         self.display.blit(live, (self.player.x - 15, self.player.y - 48))
