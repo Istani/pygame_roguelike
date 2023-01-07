@@ -5,7 +5,7 @@ import pygame
 
 from src.player import Player
 from src.projectile import Projectile
-from src.slime import Slime
+from src.creatures.slime import Slime
 from src.gui import GUI
 
 if __name__ == '__main__':
