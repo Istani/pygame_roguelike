@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import os
 
 from src.world import World
 from src.assets import Assets
@@ -16,7 +17,8 @@ from src.state import State
 
 class Game:
 
-    def __init__(self, wight=1920, height=1200, player_name="Sandro", fps=60):
+    def __init__(self, wight=1920, height=1200, fps=60):
+        self.player_name = os.environ.get('USERNAME')
         pygame.font.init()
         pygame.mixer.init()
         self.assets = Assets()
@@ -39,7 +41,7 @@ class Game:
         self.menu = Menu(display=self.display, center_x=self.center_x, center_y=self.center_y, assets=self.assets, state=self.state)
 
     def init_spawn(self):
-        self.player = Player(self.center_x, self.center_y, "Sandro", self.assets.player_images, self.display)
+        self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
         self.gui = GUI(self.display, self.player, center=[self.center_x, self.center_y])
         self.word = World()
         self.word.players.append(self.player)
