@@ -42,3 +42,8 @@ class Assets:
         self.button_audio_img = self.button_audio_img.convert_alpha()
         self.button_keys_img = self.button_keys_img.convert_alpha()
         self.button_back_img = self.button_back_img.convert_alpha()
+
+    def preprocess_sounds(self):
+        self.background_music.set_volume(0.7)
+        self.hit_sound.set_volume(0.3)
+        self.peng_sound.set_volume(0.5)
