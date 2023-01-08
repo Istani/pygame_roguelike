@@ -18,10 +18,8 @@ class Menu:
         self.assets = assets
         self.state = state
 
-        self.button_resume = ButtonResume(image=assets.button_resume_img, x=center_x - 50, y=center_y, state=self.state,
-                                          display=self.display)
-        self.button_quit = ButtonQuite(image=assets.button_quit_img, x=center_x - 50, y=center_y + 100,
-                                       state=self.state, display=self.display)
+        self.button_resume = ButtonResume(image=assets.button_resume_img, x=center_x - 50, y=center_y, state=self.state, display=self.display)
+        self.button_quit = ButtonQuite(image=assets.button_quit_img, x=center_x - 50, y=center_y + 100, state=self.state, display=self.display)
         """
         self.button_options = Button(image=assets.button_options_img)
 
