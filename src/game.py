@@ -25,6 +25,7 @@ class Game:
         pygame.init()
         self.display = pygame.display.set_mode((wight, height))
         self.assets.preprocess_images()
+        self.assets.preprocess_sounds()
         self.word = None
         self.wight = wight
         self.height = height
@@ -52,22 +53,27 @@ class Game:
         self.state = State()
 
     def spawn_random_enemy(self):
-            rd = random.randint(1, 4)
-            if rd == 1:
-                enemy_imgs = self.assets.penis_images
-                speed = 1
-            elif rd == 2:
-                enemy_imgs = self.assets.ass_images
-                speed = 2
-            elif rd == 3:
-                enemy_imgs = self.assets.snake_images
-                speed = 2
-            else:
-                enemy_imgs = self.assets.slime_images
-                speed = 2
-            self.word.enemies.append(
-                Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(),
-                      speed=speed))
+        rd = random.randint(1, 4)
+        if rd == 1:
+            enemy_imgs = self.assets.penis_images
+            speed = 1
+            ai_nr = 1
+        elif rd == 2:
+            enemy_imgs = self.assets.ass_images
+            speed = 2
+            ai_nr = 1
+        elif rd == 3:
+            enemy_imgs = self.assets.snake_images
+            speed = 2
+            ai_nr = 0
+        else:
+            enemy_imgs = self.assets.slime_images
+            speed = 1
+            ai_nr = 0
+        self.word.enemies.append(
+            Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(ai_type=ai_nr),
+                  speed=speed, display_scroll_x=self.player.display_scroll_x,
+                  display_scroll_y=self.player.display_scroll_y))
 
     def spawn_enemies(self):
         if self.spawn_counter_index == self.spawn_counter:
@@ -75,8 +81,6 @@ class Game:
             if len(self.word.enemies) < self.n_enemies:
                 self.spawn_random_enemy()
         self.spawn_counter_index += 1
-
-
 
     def game_loop_step(self, events):
         self.spawn_enemies()
@@ -96,7 +100,6 @@ class Game:
 
     def main_loop(self):
         self.assets.background_music.play(loops=-1)
-        self.assets.background_music.set_volume(0.7)
         while True:
             if self.state.reset_game:
                 self.init_spawn()
