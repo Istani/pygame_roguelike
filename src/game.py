@@ -38,7 +38,8 @@ class Game:
         self.background_color = (23, 144, 86)
         self.fps = fps
         self.init_spawn()
-        self.menu = Menu(display=self.display, center_x=self.center_x, center_y=self.center_y, assets=self.assets, state=self.state)
+        self.menu = Menu(display=self.display, center_x=self.center_x, center_y=self.center_y, assets=self.assets,
+                         state=self.state)
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
@@ -64,7 +65,8 @@ class Game:
                 enemy_imgs = self.assets.slime_images
                 speed = 2
             self.word.enemies.append(
-                Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(), speed=speed))
+                Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(),
+                      speed=speed))
 
     def game_loop_step(self, events):
         self.spawn_enemies()
@@ -75,7 +77,8 @@ class Game:
                 if event.button == 1 or event.button == 3:
                     self.assets.peng_sound.play()
                     self.word.projectiles.append(
-                        Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10, animation_images=self.assets.projectile_images))
+                        Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
+                                   animation_images=self.assets.projectile_images))
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y, self.display)
