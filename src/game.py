@@ -40,6 +40,8 @@ class Game:
         self.init_spawn()
         self.menu = Menu(display=self.display, center_x=self.center_x, center_y=self.center_y, assets=self.assets,
                          state=self.state)
+        self.spawn_counter = 60
+        self.spawn_counter_index = 0
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
@@ -49,8 +51,7 @@ class Game:
         self.word.trees.append(Tree(display=self.display, x=100, y=100, image=self.assets.tree))
         self.state = State()
 
-    def spawn_enemies(self):
-        for i in range(len(self.word.enemies), self.n_enemies):
+    def spawn_random_enemy(self):
             rd = random.randint(1, 4)
             if rd == 1:
                 enemy_imgs = self.assets.penis_images
@@ -67,6 +68,15 @@ class Game:
             self.word.enemies.append(
                 Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(),
                       speed=speed))
+
+    def spawn_enemies(self):
+        if self.spawn_counter_index == self.spawn_counter:
+            self.spawn_counter_index = -1
+            if len(self.word.enemies) < self.n_enemies:
+                self.spawn_random_enemy()
+        self.spawn_counter_index += 1
+
+
 
     def game_loop_step(self, events):
         self.spawn_enemies()
