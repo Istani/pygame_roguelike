@@ -4,7 +4,7 @@ import random
 
 class Enemy:
 
-    def __init__(self, display, enemy_images, hit_sound, ai, speed=1):
+    def __init__(self, display, enemy_images, hit_sound, ai, display_scroll_x, display_scroll_y, speed=1):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
@@ -21,22 +21,24 @@ class Enemy:
         self.w, self.h = pygame.display.get_surface().get_size()
         self.out_of_screen_offset = 10
         self.speed = speed
-        self.spawn()
+        self.spawn(display_scroll_x, display_scroll_y)
 
-    def spawn(self):
+    def spawn(self, display_scroll_x, display_scroll_y):
+        self.x = display_scroll_x
+        self.y = display_scroll_y
         rnd = random.randint(1, 4)
         if rnd == 1:
-            self.x = random.randint(0, self.w)
-            self.y = - self.out_of_screen_offset
+            self.x += random.randint(0, self.w)
+            self.y += - self.out_of_screen_offset
         elif rnd == 2:
-            self.x = random.randint(0, self.w)
-            self.y = self.h + self.out_of_screen_offset
+            self.x += random.randint(0, self.w)
+            self.y += self.h + self.out_of_screen_offset
         elif rnd == 3:
-            self.x = - self.out_of_screen_offset
-            self.y = random.randint(0, self.h)
+            self.x += - self.out_of_screen_offset
+            self.y += random.randint(0, self.h)
         else:
-            self.y = random.randint(0, self.h)
-            self.x = self.w + self.out_of_screen_offset
+            self.y += random.randint(0, self.h)
+            self.x += self.w + self.out_of_screen_offset
 
     def draw(self, display_scroll_x, display_scroll_y):
         if not self.alive:
