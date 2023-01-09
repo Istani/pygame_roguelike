@@ -10,13 +10,13 @@ class World:
         self.players = []
         self.projectiles = []
         self.trees = []
-        self.noise = PerlinNoise(octaves=6, seed=random.randint(0, 100000));
+        self.noise = PerlinNoise(octaves=6, seed=random.randint(0, 100000))
 
-    def check_collisions(self, display_scroll_x, display_scroll_y):
+    def check_collisions(self, display_scroll_x, display_scroll_y, use_rect=True):
         for projectile in self.projectiles:
             for enemy in self.enemies:
-                offset_x = projectile.x - enemy.x + display_scroll_x
-                offset_y = projectile.y - enemy.y + display_scroll_y
+                offset_x = projectile.x - enemy.x - display_scroll_x
+                offset_y = projectile.y - enemy.y - display_scroll_y
                 if projectile.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
                     if enemy.alive:
                         enemy.hit_sound.play()
@@ -25,10 +25,21 @@ class World:
                     projectile.player.kills += 1
 
         for player in self.players:
+            player.rect.x = player.x
+            player.rect.y = player.y
             for enemy in self.enemies:
-                offset_x = player.x - enemy.x + display_scroll_x
-                offset_y = player.y - enemy.y + display_scroll_y
-                if player.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
+                collision = False
+                if use_rect:
+                    enemy.rect.x = enemy.x + display_scroll_x
+                    enemy.rect.y = enemy.y + display_scroll_y
+                    if player.rect.colliderect(enemy.rect):
+                        collision = True
+                else:
+                    offset_x = player.x - enemy.x + display_scroll_x
+                    offset_y = player.y - enemy.y + display_scroll_y
+                    if player.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
+                        collision = True
+                if collision:
                     player.live -= 1
 
     def enemy_would_collide(self, enemy):
@@ -43,9 +54,6 @@ class World:
     def move_enemies(self):
         for enemy in self.enemies:
             enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
-            if True:  # not self.enemy_would_collide(enemy):
-                enemy.x = enemy.x_next
-                enemy.y = enemy.y_next
 
     def remove_dead_objects(self):
         self.enemies = [e for e in self.enemies if e.alive]
@@ -94,10 +102,8 @@ class World:
     def draw(self, display_scroll_x, display_scroll_y, screen, use_perlin_noise=False):
         self.remove_dead_objects()
         self.move_enemies()
-
         if use_perlin_noise:
             self.draw_background(display_scroll_x, display_scroll_y, screen)
-
         for tree in self.trees:
             tree.draw(display_scroll_x, display_scroll_y)
         for projectile in self.projectiles:
