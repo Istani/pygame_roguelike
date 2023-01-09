@@ -7,6 +7,8 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
+- BUG (1) needs to be fixed :(
+- Debug view, coordinates over object and more info
 - Enemies keep distance to each other 
 
 
@@ -21,13 +23,15 @@ Action roguelike in python with pygame engine.
 - Multiplayer
 - Enemies get different velocities on axis (snake is get better vertical speed)
 
-## Bugs to fix 
-- Monsters do not spawn off-screen - FIXED 
+# Bugs
+- (1) Collision with player is buggy 
 - projectiles move with the player
 - No third try when playing (Respawn player Bug)
 
+
 ## Done (but still not perfect)
 - better movement AI
+- Monsters do not spawn off-screen - FIXED 
 
 # DEV Log
 ### 9.1.23
