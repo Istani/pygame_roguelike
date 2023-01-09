@@ -19,6 +19,7 @@ Action roguelike in python with pygame engine.
 - Leaderboard 
 - fixed map size
 - Multiplayer
+- Enemies get different velocities on axis (snake is get better vertical speed)
 
 ## Bugs to fix 
 - Monsters do not spawn off-screen - FIXED 
@@ -28,6 +29,9 @@ Action roguelike in python with pygame engine.
 ## Done (but still not perfect)
 - better movement AI
 
+# DEV Log
+### 9.1.23
+Failed to implement that enemies keep distance to each other, not sure how to make them spreed to avoid stacking  
 
 # Thanks for the inspiration
 [ScriptLine Studios - Pygame Top Down Shooter Tutorial](https://youtu.be/sVbFS9qEl4Y)
