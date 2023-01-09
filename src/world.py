@@ -31,9 +31,21 @@ class World:
                 if player.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
                     player.live -= 1
 
+    def enemy_would_collide(self, enemy):
+        for e in self.enemies:
+            if e != enemy:
+                offset_x = e.x - enemy.x
+                offset_y = e.y - enemy.y
+                if e.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
+                    return True
+        return False
+
     def move_enemies(self):
         for enemy in self.enemies:
             enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
+            if True:  # not self.enemy_would_collide(enemy):
+                enemy.x = enemy.x_next
+                enemy.y = enemy.y_next
 
     def remove_dead_objects(self):
         self.enemies = [e for e in self.enemies if e.alive]
