@@ -29,7 +29,7 @@ class Game:
         self.word = None
         self.wight = wight
         self.height = height
-        self.n_enemies = 50
+        self.n_enemies = 100
         self.clock = pygame.time.Clock()
         self.center_x = self.wight // 2
         self.center_y = self.height // 2
@@ -71,7 +71,7 @@ class Game:
             speed = 1
             ai_nr = 0
         self.word.enemies.append(
-            Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(ai_type=ai_nr),
+            Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(ai_type=1),
                   speed=speed, display_scroll_x=self.player.display_scroll_x,
                   display_scroll_y=self.player.display_scroll_y))
 
