@@ -24,15 +24,15 @@ class AI:
         if self.reset_counter == 0:
             self.reset()
         if player.x + self.offset_x > enemy.x - player.display_scroll_x:
-            enemy.x += enemy.speed
+            enemy.x_next = enemy.x + enemy.speed
             enemy.flip = False
         elif player.x + self.offset_x < enemy.x - player.display_scroll_x:
-            enemy.x -= enemy.speed
+            enemy.x_next = enemy.x - enemy.speed
             enemy.flip = True
         if player.y + self.offset_y > enemy.y - player.display_scroll_y:
-            enemy.y += enemy.speed
+            enemy.y_next = enemy.y + enemy.speed
         elif player.y + self.offset_y < enemy.y - player.display_scroll_y:
-            enemy.y -= enemy.speed
+            enemy.y_next = enemy.y - enemy.speed
 
     def move_enemy_aggressive(self, player, enemy):
         ex, ey = enemy.x - player.display_scroll_x, enemy.y - player.display_scroll_y
