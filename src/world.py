@@ -15,9 +15,18 @@ class World:
     def check_collisions(self, display_scroll_x, display_scroll_y, use_rect=True):
         for projectile in self.projectiles:
             for enemy in self.enemies:
-                offset_x = projectile.x - enemy.x - display_scroll_x
-                offset_y = projectile.y - enemy.y - display_scroll_y
-                if projectile.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
+                collision = False
+                if use_rect:
+                    enemy.rect.x = enemy.x - display_scroll_x
+                    enemy.rect.y = enemy.y - display_scroll_y
+                    if projectile.rect.colliderect(enemy.rect):
+                        collision = True
+                else:
+                    offset_x = projectile.x - enemy.x - display_scroll_x
+                    offset_y = projectile.y - enemy.y - display_scroll_y
+                    if projectile.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
+                        collision = True
+                if collision:
                     if enemy.alive:
                         enemy.hit_sound.play()
                     enemy.alive = False
@@ -30,8 +39,8 @@ class World:
             for enemy in self.enemies:
                 collision = False
                 if use_rect:
-                    enemy.rect.x = enemy.x + display_scroll_x
-                    enemy.rect.y = enemy.y + display_scroll_y
+                    enemy.rect.x = enemy.x - display_scroll_x
+                    enemy.rect.y = enemy.y - display_scroll_y
                     if player.rect.colliderect(enemy.rect):
                         collision = True
                 else:
