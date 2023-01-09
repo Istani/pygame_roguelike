@@ -55,24 +55,24 @@ class Game:
     def spawn_random_enemy(self):
         rd = random.randint(1, 4)
         if rd == 1:
-            enemy_imgs = self.assets.penis_images
+            enemy_sprite = self.assets.penis_images
             speed = 1
             ai_nr = 1
         elif rd == 2:
-            enemy_imgs = self.assets.ass_images
+            enemy_sprite = self.assets.ass_images
             speed = 2
             ai_nr = 1
         elif rd == 3:
-            enemy_imgs = self.assets.snake_images
+            enemy_sprite = self.assets.snake_images
             speed = 2
             ai_nr = 0
         else:
-            enemy_imgs = self.assets.slime_images
+            enemy_sprite = self.assets.slime_images
             speed = 1
             ai_nr = 0
         self.word.enemies.append(
-            Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(ai_type=ai_nr),
-                  speed=speed, display_scroll_x=self.player.display_scroll_x,
+            Enemy(display=self.display, enemy_images=enemy_sprite, hit_sound=self.assets.hit_sound,
+                  ai=AI(ai_type=ai_nr), speed=speed, display_scroll_x=self.player.display_scroll_x,
                   display_scroll_y=self.player.display_scroll_y))
 
     def spawn_enemies(self):
