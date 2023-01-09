@@ -22,6 +22,8 @@ class Enemy:
         self.out_of_screen_offset = 10
         self.speed = speed
         self.spawn(display_scroll_x, display_scroll_y)
+        self.x_next = None
+        self.y_next = None
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
@@ -39,6 +41,8 @@ class Enemy:
         else:
             self.y += random.randint(0, self.h)
             self.x += self.w + self.out_of_screen_offset
+        self.x_next = self.x
+        self.y_next = self.y
 
     def draw(self, display_scroll_x, display_scroll_y):
         if not self.alive:
