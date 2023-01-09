@@ -30,6 +30,7 @@ class Game:
         self.wight = wight
         self.height = height
         self.n_enemies = 100
+        self.n_trees = 3
         self.clock = pygame.time.Clock()
         self.center_x = self.wight // 2
         self.center_y = self.height // 2
@@ -44,12 +45,16 @@ class Game:
         self.spawn_counter = 60
         self.spawn_counter_index = 0
 
+
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
         self.gui = GUI(self.display, self.player, center=[self.center_x, self.center_y])
         self.word = World()
         self.word.players.append(self.player)
-        self.word.trees.append(Tree(display=self.display, x=100, y=100, image=self.assets.tree))
+
+        for _ in range(self.n_trees):
+            self.word.trees.append(Tree(display=self.display, x=random.randint(0, self.wight),
+                                        y=random.randint(0, self.height), image=self.assets.tree))
         self.state = State()
 
     def spawn_random_enemy(self):
@@ -70,6 +75,7 @@ class Game:
             enemy_imgs = self.assets.slime_images
             speed = 1
             ai_nr = 0
+        speed = 1
         self.word.enemies.append(
             Enemy(display=self.display, enemy_images=enemy_imgs, hit_sound=self.assets.hit_sound, ai=AI(ai_type=ai_nr),
                   speed=speed, display_scroll_x=self.player.display_scroll_x,
@@ -89,10 +95,12 @@ class Game:
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 or event.button == 3:
-                    self.assets.peng_sound.play()
-                    self.word.projectiles.append(
-                        Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
-                                   animation_images=self.assets.projectile_images))
+                    print(self.player.x,  self.player.y)
+                    if self.player.alive:
+                        self.assets.peng_sound.play()
+                        self.word.projectiles.append(
+                            Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
+                                       animation_images=self.assets.projectile_images))
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y, self.display)
