@@ -4,11 +4,13 @@ import random
 
 class Enemy:
 
-    def __init__(self, display, enemy_images, hit_sound, ai, display_scroll_x, display_scroll_y, speed=1):
+    def __init__(self, display, enemy_images, hit_sound, ai, display_scroll_x, display_scroll_y, speed=1,
+                 dev_view=True):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
         self.mask = pygame.mask.from_surface(self.animation_images[0])
+        self.rect = self.animation_images[0].get_rect()
         self.animation_timer = 16
         self.timer_index = 0
         self.animation_index = 0
@@ -22,8 +24,9 @@ class Enemy:
         self.out_of_screen_offset = 10
         self.speed = speed
         self.spawn(display_scroll_x, display_scroll_y)
-        self.x_next = None
-        self.y_next = None
+        self.dev_view = dev_view
+        self.dev_font = pygame.font.SysFont("comicsans", 15)
+
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
@@ -41,8 +44,6 @@ class Enemy:
         else:
             self.y += random.randint(0, self.h)
             self.x += self.w + self.out_of_screen_offset
-        self.x_next = self.x
-        self.y_next = self.y
 
     def draw(self, display_scroll_x, display_scroll_y):
         if not self.alive:
@@ -55,4 +56,10 @@ class Enemy:
         self.timer_index += 1
         img = self.animation_images[self.animation_index]
         img = pygame.transform.flip(img, flip_x=self.flip, flip_y=False)
+
+        if self.dev_view:
+            pos = (self.x - display_scroll_x, self.y - display_scroll_y)
+            dev_pos = self.dev_font.render(str(pos), True, (255, 255, 255))
+            self.display.blit(dev_pos,  (self.x - display_scroll_x -50, self.y - display_scroll_y-50))
+            pygame.draw.rect(self.display, (255, 0, 0), self.rect)
         self.display.blit(img, (self.x - display_scroll_x, self.y - display_scroll_y))
