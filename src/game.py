@@ -8,7 +8,7 @@ from src.assets import Assets
 from src.player import Player
 from src.gui import GUI
 from src.projectile import Projectile
-from src.tree import Tree
+from src.natureobject import Tree
 from src.enemy import Enemy
 from src.ai import AI
 from src.menu import Menu
@@ -94,7 +94,6 @@ class Game:
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 or event.button == 3:
-                    print(self.player.x, self.player.y)
                     if self.player.alive:
                         self.assets.peng_sound.play()
                         self.word.projectiles.append(
@@ -108,6 +107,9 @@ class Game:
     def main_loop(self):
         self.assets.background_music.play(loops=-1)
         while True:
+            self.display.fill(self.background_color)
+            self.assets.grass_tile.draw(self.display)
+
             if self.state.reset_game:
                 self.init_spawn()
                 self.state.reset_game = False
@@ -116,7 +118,6 @@ class Game:
                 self.state.game_over = False
             if not self.player.alive:
                 self.state.game_over = True
-            self.display.fill(self.background_color)
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
