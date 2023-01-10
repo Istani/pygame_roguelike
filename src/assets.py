@@ -1,5 +1,6 @@
 import pygame
 
+from src.tilesheet import TileSheet
 
 class Assets:
 
@@ -25,6 +26,10 @@ class Assets:
         self.button_audio_img = pygame.image.load("../assets/buttons/button_audio.png")
         self.button_keys_img = pygame.image.load("../assets/buttons/button_keys.png")
         self.button_back_img = pygame.image.load("../assets/buttons/button_back.png")
+
+        # tiles
+        self.grass_tile_img = pygame.image.load("../assets/environment/grass.png")
+        self.grass_tile = TileSheet(image=self.grass_tile_img, tile_size=16, n_columns=25, n_rows=14, scale=(32, 32))
 
     def preprocess_images(self):
         self.tree = pygame.transform.scale(self.tree, (150, 250))
