@@ -1,7 +1,6 @@
 import random
-
 import pygame
-
+from perlin_noise import PerlinNoise
 
 class TileSheet:
 
@@ -28,6 +27,7 @@ class TileSheet:
                 c = random.randint(0, 24)
             self.objects.append((c, r))
         self.object_draw = None
+        self.noise = PerlinNoise(octaves=6, seed=random.randint(0, 100000))
 
 
     def get_tile_table(self):
@@ -57,17 +57,47 @@ class TileSheet:
                             (tile_x, tile_y))
 
         if self.object_draw is None:
+            place = [[self.noise([i / n_row, j / n_cols]) for j in range(n_cols+1)] for i in range(n_row+1)]
+
             self.object_draw = []
             for x in range(n_row):
                 for y in range(n_cols):
-                    if random.random() < 0.05:
+                    if True:#random.random() < 0.05:
                         tile_x = x * s - display_scroll_x
                         tile_y = y * s - display_scroll_y
-                        tile_row, tile_column = self.objects[random.randint(0, self.n_random_objects - 2)]
-                        print(tile_row, tile_column)
-                        self.object_draw.append(
-                            (self.tile_table[tile_row][tile_column], (tile_x, tile_y))
-                        )
+                        print(place[x][y])
+
+                        if place[x][y] >= 0.7:
+                            tile_row, tile_column = self.objects[0]
+                            print(tile_row, tile_column)
+                            self.object_draw.append(
+                                (self.tile_table[tile_row][tile_column], (tile_x, tile_y))
+                            )
+                        elif place[x][y] >= 0.3:
+                            tile_row, tile_column = self.objects[1]
+                            print(tile_row, tile_column)
+                            self.object_draw.append(
+                                (self.tile_table[tile_row][tile_column], (tile_x, tile_y))
+                            )
+                        elif place[x][y] >= 0.1:
+                            tile_row, tile_column = self.objects[2]
+                            print(tile_row, tile_column)
+                            self.object_draw.append(
+                                (self.tile_table[tile_row][tile_column], (tile_x, tile_y))
+                            )
+                        elif place[x][y] >= 0.01:
+                            tile_row, tile_column = self.objects[3]
+                            print(tile_row, tile_column)
+                            self.object_draw.append(
+                                (self.tile_table[tile_row][tile_column], (tile_x, tile_y))
+                            )
+                        elif place[x][y] >= -0.001:
+                            tile_row, tile_column = self.objects[4]
+                            print(tile_row, tile_column)
+                            self.object_draw.append(
+                                (self.tile_table[tile_row][tile_column], (tile_x, tile_y))
+                            )
+
         else:
             for obj in self.object_draw:
                 screen.blit(obj[0], (obj[1][0] - display_scroll_x , obj[1][1] - display_scroll_y))
