@@ -4,7 +4,7 @@ import math
 
 class Projectile:
 
-    def __init__(self, x_mouse, y_mouse, player, animation_images, color=(255, 0, 0), speed=15, dev_view=True):
+    def __init__(self, x_mouse, y_mouse, player, animation_images, color=(255, 0, 0), speed=15, dev_view=False):
         self.x = int(player.x)
         self.y = int(player.y)
         self.x_mouse = x_mouse

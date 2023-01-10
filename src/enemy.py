@@ -5,7 +5,7 @@ import random
 class Enemy:
 
     def __init__(self, display, enemy_images, hit_sound, ai, display_scroll_x, display_scroll_y, speed=1,
-                 dev_view=True):
+                 dev_view=False):
         self.x = None
         self.y = None
         self.animation_images = enemy_images

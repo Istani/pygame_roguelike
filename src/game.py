@@ -17,7 +17,8 @@ from src.state import State
 
 class Game:
 
-    def __init__(self, wight=1920, height=1200, fps=60):
+    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False):
+        self.dev_view = dev_view
         self.player_name = os.environ.get('USERNAME')
         pygame.font.init()
         pygame.mixer.init()
@@ -44,7 +45,6 @@ class Game:
                          state=self.state)
         self.spawn_counter = 60
         self.spawn_counter_index = 0
-
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
@@ -75,11 +75,10 @@ class Game:
             enemy_sprite = self.assets.slime_images
             speed = 1
             ai_nr = 0
-        speed = 1
         self.word.enemies.append(
             Enemy(display=self.display, enemy_images=enemy_sprite, hit_sound=self.assets.hit_sound,
                   ai=AI(ai_type=ai_nr), speed=speed, display_scroll_x=self.player.display_scroll_x,
-                  display_scroll_y=self.player.display_scroll_y))
+                  display_scroll_y=self.player.display_scroll_y, dev_view=self.dev_view))
 
     def spawn_enemies(self):
         if self.spawn_counter_index == self.spawn_counter:
@@ -95,12 +94,12 @@ class Game:
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 or event.button == 3:
-                    print(self.player.x,  self.player.y)
+                    print(self.player.x, self.player.y)
                     if self.player.alive:
                         self.assets.peng_sound.play()
                         self.word.projectiles.append(
                             Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
-                                       animation_images=self.assets.projectile_images))
+                                       animation_images=self.assets.projectile_images, dev_view=self.dev_view))
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y, self.display)
