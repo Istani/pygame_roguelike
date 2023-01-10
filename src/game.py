@@ -108,7 +108,7 @@ class Game:
         self.assets.background_music.play(loops=-1)
         while True:
             self.display.fill(self.background_color)
-            self.assets.grass_tile.draw(self.display)
+            self.assets.grass_tile.draw(self.display, self.player.display_scroll_x, self.player.display_scroll_y)
 
             if self.state.reset_game:
                 self.init_spawn()
