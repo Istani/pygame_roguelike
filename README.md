@@ -7,11 +7,11 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-- Debug view, coordinates over object and more info
+- more env objects (like trees)
+
 
 ## Soon 
 - Enemies keep distance to each other
-- more env objects (like trees)
 - player Items
 - pysics, knock-back
 - enemy projectiles 
@@ -31,7 +31,9 @@ Action roguelike in python with pygame engine.
 - better movement AI
 - Monsters do not spawn off-screen - FIXED 
 - Collision with player is buggy - FIXED
-- 
+- Debug view, coordinates over object and more info
+
+
 # DEV Log
 ### 9.1.23
 Failed to implement that enemies keep distance to each other, not sure how to make them spreed to avoid stacking  
