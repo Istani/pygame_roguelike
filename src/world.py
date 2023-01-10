@@ -5,12 +5,13 @@ import pygame
 
 class World:
 
-    def __init__(self):
+    def __init__(self, draw_trees=False):
         self.enemies = []
         self.players = []
         self.projectiles = []
         self.trees = []
         self.noise = PerlinNoise(octaves=6, seed=random.randint(0, 100000))
+        self.draw_trees = draw_trees
 
     def check_collisions(self, display_scroll_x, display_scroll_y, use_rect=True):
         for projectile in self.projectiles:
@@ -113,8 +114,9 @@ class World:
         self.move_enemies()
         if use_perlin_noise:
             self.draw_background(display_scroll_x, display_scroll_y, screen)
-        for tree in self.trees:
-            tree.draw(display_scroll_x, display_scroll_y)
+        if self.draw_trees:
+            for tree in self.trees:
+                tree.draw(display_scroll_x, display_scroll_y)
         for projectile in self.projectiles:
             projectile.draw()
         for enemy in self.enemies:
