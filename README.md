@@ -7,7 +7,6 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-- more env objects (like trees)
 
 
 ## Soon 
@@ -32,11 +31,15 @@ Action roguelike in python with pygame engine.
 - Monsters do not spawn off-screen - FIXED 
 - Collision with player is buggy - FIXED
 - Debug view, coordinates over object and more info
+- more env objects (like trees)
 
 
 # DEV Log
 ### 9.1.23
 Failed to implement that enemies keep distance to each other, not sure how to make them spreed to avoid stacking  
+### 10.1.23
+Added a class to read tilesheets and select random sprites for grass and add some more objects. Feels like progress. :)
+
 
 # Thanks for the inspiration
 [ScriptLine Studios - Pygame Top Down Shooter Tutorial](https://youtu.be/sVbFS9qEl4Y)
