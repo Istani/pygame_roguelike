@@ -29,7 +29,6 @@ class Enemy:
         self.live_font = pygame.font.SysFont("comicsans", 15)
         self.dev_font = pygame.font.SysFont("comicsans", 18)
 
-
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
         self.y = display_scroll_y
@@ -58,12 +57,12 @@ class Enemy:
         self.timer_index += 1
         img = self.animation_images[self.animation_index]
         img = pygame.transform.flip(img, flip_x=self.flip, flip_y=False)
-        live = self.live_font.render(str(self.live) + " /" + str(self.live_max) , True, (255, 255, 255))
-        self.display.blit(live, (self.x - 15, self.y - 18))
+        live = self.live_font.render(str(self.live) + " /" + str(self.live_max), True, (255, 255, 255))
+        self.display.blit(live, (self.x - 15 - display_scroll_x, self.y - 18 - display_scroll_y))
 
         if self.dev_view:
             pos = (self.x - display_scroll_x, self.y - display_scroll_y)
             dev_pos = self.dev_font.render(str(pos), True, (255, 255, 255))
-            self.display.blit(dev_pos,  (self.x - display_scroll_x -50, self.y - display_scroll_y-50))
+            self.display.blit(dev_pos, (self.x - display_scroll_x - 50, self.y - display_scroll_y - 50))
             pygame.draw.rect(self.display, (255, 0, 0), self.rect)
         self.display.blit(img, (self.x - display_scroll_x, self.y - display_scroll_y))
