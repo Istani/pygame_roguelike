@@ -17,6 +17,11 @@ class Assets:
         self.peng_sound = pygame.mixer.Sound("../assets/sounds/peng.wav")
         self.hit_sound = pygame.mixer.Sound("../assets/sounds/aua.wav")
         self.tree = pygame.image.load("../assets/environment/tree.png")
+        self.hit_0 = pygame.mixer.Sound("../assets/sounds/hit_0.wav")
+        self.hit_1 = pygame.mixer.Sound("../assets/sounds/hit_1.wav")
+        self.hit_2 = pygame.mixer.Sound("../assets/sounds/hit_2.wav")
+        self.hit_3 = pygame.mixer.Sound("../assets/sounds/hit_3.wav")
+
 
         # buttons
         self.button_resume_img = pygame.image.load("../assets/buttons/button_resume.png")
@@ -49,6 +54,6 @@ class Assets:
         self.button_back_img = self.button_back_img.convert_alpha()
 
     def preprocess_sounds(self):
-        self.background_music.set_volume(0.7)
+        self.background_music.set_volume(0.3)
         self.hit_sound.set_volume(0.3)
-        self.peng_sound.set_volume(0.5)
+        self.peng_sound.set_volume(0.2)

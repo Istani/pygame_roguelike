@@ -63,20 +63,24 @@ class Game:
             enemy_sprite = self.assets.penis_images
             speed = 1
             ai_nr = 1
+            hit_sound = self.assets.hit_0
         elif rd == 2:
             enemy_sprite = self.assets.ass_images
             speed = 2
             ai_nr = 1
+            hit_sound = self.assets.hit_1
         elif rd == 3:
             enemy_sprite = self.assets.snake_images
             speed = 2
             ai_nr = 0
+            hit_sound = self.assets.hit_2
         else:
             enemy_sprite = self.assets.slime_images
             speed = 1
             ai_nr = 0
+            hit_sound = self.assets.hit_3
         self.word.enemies.append(
-            Enemy(display=self.display, enemy_images=enemy_sprite, hit_sound=self.assets.hit_sound,
+            Enemy(display=self.display, enemy_images=enemy_sprite, hit_sound=hit_sound,
                   ai=AI(ai_type=ai_nr), speed=speed, display_scroll_x=self.player.display_scroll_x,
                   display_scroll_y=self.player.display_scroll_y, dev_view=self.dev_view))
 
