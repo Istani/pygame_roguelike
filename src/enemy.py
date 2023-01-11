@@ -5,7 +5,7 @@ import random
 class Enemy:
 
     def __init__(self, display, enemy_images, hit_sound, ai, display_scroll_x, display_scroll_y, speed=1,
-                 dev_view=False):
+                 dev_view=False, live_max=100):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
@@ -16,7 +16,8 @@ class Enemy:
         self.animation_index = 0
         self.display = display
         self.alive = True
-        self.live = 100
+        self.live_max = live_max
+        self.live = live_max
         self.hit_sound = hit_sound
         self.ai = ai
         self.flip = False
@@ -25,7 +26,8 @@ class Enemy:
         self.speed = speed
         self.spawn(display_scroll_x, display_scroll_y)
         self.dev_view = dev_view
-        self.dev_font = pygame.font.SysFont("comicsans", 15)
+        self.live_font = pygame.font.SysFont("comicsans", 15)
+        self.dev_font = pygame.font.SysFont("comicsans", 18)
 
 
     def spawn(self, display_scroll_x, display_scroll_y):
@@ -56,6 +58,8 @@ class Enemy:
         self.timer_index += 1
         img = self.animation_images[self.animation_index]
         img = pygame.transform.flip(img, flip_x=self.flip, flip_y=False)
+        live = self.live_font.render(str(self.live) + " /" + str(self.live_max) , True, (255, 255, 255))
+        self.display.blit(live, (self.x - 15, self.y - 18))
 
         if self.dev_view:
             pos = (self.x - display_scroll_x, self.y - display_scroll_y)
