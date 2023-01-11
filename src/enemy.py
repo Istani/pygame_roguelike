@@ -28,6 +28,9 @@ class Enemy:
         self.dev_view = dev_view
         self.live_font = pygame.font.SysFont("comicsans", 15)
         self.dev_font = pygame.font.SysFont("comicsans", 18)
+        self.knock_back_velocity_x = None
+        self.knock_back_velocity_x = None
+        self.knock_back_timer = 0
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x

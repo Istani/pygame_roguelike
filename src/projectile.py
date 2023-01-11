@@ -5,7 +5,7 @@ import math
 class Projectile:
 
     def __init__(self, x_mouse, y_mouse, player, animation_images, damage=50, color=(255, 0, 0), speed=15,
-                 dev_view=False):
+                 knock_back_duration=15, dev_view=False):
         self.x = int(player.x)
         self.y = int(player.y)
         self.x_mouse = x_mouse
@@ -26,6 +26,7 @@ class Projectile:
         self.display = player.display
         self.dev_view = dev_view
         self.damage = damage
+        self.knock_back_duration = knock_back_duration
 
     def draw(self):
         if not self.alive:

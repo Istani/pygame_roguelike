@@ -48,7 +48,12 @@ class AI:
             enemy.y = enemy.y - enemy.speed
 
     def move_enemy(self, player, enemy):
-        if self.ai_type == 0:
-            self.move_enemy_default(player, enemy)
-        if self.ai_type == 1:
-            self.move_enemy_aggressive(player, enemy)
+        if enemy.knock_back_timer == 0:
+            if self.ai_type == 0:
+                self.move_enemy_default(player, enemy)
+            if self.ai_type == 1:
+                self.move_enemy_aggressive(player, enemy)
+        else:
+            enemy.x -= enemy.knock_back_velocity_x
+            enemy.y -= enemy.knock_back_velocity_y
+            enemy.knock_back_timer -= 1

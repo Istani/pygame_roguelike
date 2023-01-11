@@ -32,6 +32,9 @@ class World:
                         enemy.alive = False
                         projectile.player.kills += 1
                     projectile.alive = False
+                    enemy.knock_back_velocity_x = projectile.x_vel
+                    enemy.knock_back_velocity_y = projectile.y_vel
+                    enemy.knock_back_timer = projectile.knock_back_duration
 
         for player in self.players:
             player.rect.x = player.x
