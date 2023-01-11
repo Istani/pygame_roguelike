@@ -27,9 +27,11 @@ class World:
                 if collision:
                     if enemy.alive:
                         enemy.hit_sound.play()
-                    enemy.alive = False
+                    enemy.live -= projectile.damage
+                    if enemy.live <= 0:
+                        enemy.alive = False
+                        projectile.player.kills += 1
                     projectile.alive = False
-                    projectile.player.kills += 1
 
         for player in self.players:
             player.rect.x = player.x

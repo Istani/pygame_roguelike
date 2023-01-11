@@ -4,14 +4,15 @@ import math
 
 class Projectile:
 
-    def __init__(self, x_mouse, y_mouse, player, animation_images, color=(255, 0, 0), speed=15, dev_view=False):
+    def __init__(self, x_mouse, y_mouse, player, animation_images, damage=50, color=(255, 0, 0), speed=15,
+                 dev_view=False):
         self.x = int(player.x)
         self.y = int(player.y)
         self.x_mouse = x_mouse
         self.y_mouse = y_mouse
         self.color = color
         self.speed = speed
-        self.angle = math.atan2(self.y - y_mouse, self.x  - x_mouse)
+        self.angle = math.atan2(self.y - y_mouse, self.x - x_mouse)
         self.x_vel = math.cos(self.angle) * self.speed
         self.y_vel = math.sin(self.angle) * self.speed
         self.alive = True
@@ -24,6 +25,7 @@ class Projectile:
         self.player = player
         self.display = player.display
         self.dev_view = dev_view
+        self.damage = damage
 
     def draw(self):
         if not self.alive:
@@ -42,5 +44,3 @@ class Projectile:
         if self.animation_counter > self.__animation_delay:
             self.__animation_index += 1
             self.animation_counter = 0
-
-
