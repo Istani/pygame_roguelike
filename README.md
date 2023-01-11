@@ -7,17 +7,19 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
+- pysics, knock-back
 
 
 ## Soon 
 - Enemies keep distance to each other
 - player Items
-- pysics, knock-back
+- Health bars
 - enemy projectiles 
 - better main menu 
 - Leaderboard 
 - fixed map size
 - Multiplayer
+- class to manage font styles 
 - Enemies get different velocities on axis (snake is get better vertical speed)
 
 # Bugs
