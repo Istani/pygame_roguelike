@@ -88,6 +88,7 @@ class World:
             enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
 
     def remove_dead_objects(self):
+        self.enemies_projectiles = [ep for ep in self.enemies_projectiles if ep.alive]
         self.enemies = [e for e in self.enemies if e.alive]
         self.projectiles = [p for p in self.projectiles if p.alive]
 
