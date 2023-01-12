@@ -49,7 +49,7 @@ class Game:
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
         self.gui = GUI(self.display, self.player, center=[self.center_x, self.center_y])
-        self.word = World()
+        self.word = World(assets=self.assets, dev_view=self.dev_view)
         self.word.players.append(self.player)
 
         for _ in range(self.n_trees):
@@ -64,25 +64,29 @@ class Game:
             speed = 1
             ai_nr = 1
             hit_sound = self.assets.hit_0
+            fire = True
         elif rd == 2:
             enemy_sprite = self.assets.ass_images
             speed = 2
             ai_nr = 1
             hit_sound = self.assets.hit_1
+            fire = True
         elif rd == 3:
             enemy_sprite = self.assets.snake_images
             speed = 2
             ai_nr = 0
             hit_sound = self.assets.hit_2
+            fire = False
         else:
             enemy_sprite = self.assets.slime_images
             speed = 1
             ai_nr = 0
             hit_sound = self.assets.hit_3
+            fire = False
         self.word.enemies.append(
             Enemy(display=self.display, enemy_images=enemy_sprite, hit_sound=hit_sound,
                   ai=AI(ai_type=ai_nr), speed=speed, display_scroll_x=self.player.display_scroll_x,
-                  display_scroll_y=self.player.display_scroll_y, dev_view=self.dev_view))
+                  display_scroll_y=self.player.display_scroll_y, dev_view=self.dev_view, uses_projectiles=fire))
 
     def spawn_enemies(self):
         if self.spawn_counter_index == self.spawn_counter:
@@ -105,7 +109,7 @@ class Game:
                                        animation_images=self.assets.projectile_images, dev_view=self.dev_view))
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
-        self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y, self.display)
+        self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y)
         self.gui.draw()
 
     def main_loop(self):

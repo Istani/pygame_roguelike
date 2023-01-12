@@ -3,12 +3,23 @@ import pygame
 
 class World:
 
-    def __init__(self, draw_trees=False):
+    def __init__(self, assets, draw_trees=False, dev_view=False):
         self.enemies = []
         self.players = []
         self.projectiles = []
         self.trees = []
         self.draw_trees = draw_trees
+        self.assets = assets
+        self.enemies_projectiles = []
+        self.dev_view = dev_view
+
+    def enemies_fire_projectiles(self):
+        for enemy in self.enemies:
+            if enemy.uses_projectiles:
+                new_projectile = enemy.fire_projectile(animation_images=self.assets.projectile_images,
+                                                       player=self.players[0])
+                if new_projectile is not None:
+                    self.enemies_projectiles.append(new_projectile)
 
     def check_collisions(self, display_scroll_x, display_scroll_y, use_rect=True):
         for projectile in self.projectiles:
@@ -52,9 +63,18 @@ class World:
                     if player.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
                         collision = True
                 if collision:
-                    player.live -= 1
+                    if not self.dev_view:
+                        player.live -= 1
 
-    def enemy_would_collide(self, enemy):
+            for enemy_projectile in self.enemies_projectiles:
+                if player.rect.colliderect(enemy_projectile.rect):
+                    if enemy_projectile.alive and player.alive:
+                        if not self.dev_view:
+                            player.live -= enemy_projectile.damage
+                        enemy_projectile.alive = False
+                        self.assets.hit_sound.play()
+
+    def enemy_would_collide_old(self, enemy):
         for e in self.enemies:
             if e != enemy:
                 offset_x = e.x - enemy.x
@@ -71,9 +91,10 @@ class World:
         self.enemies = [e for e in self.enemies if e.alive]
         self.projectiles = [p for p in self.projectiles if p.alive]
 
-    def draw(self, display_scroll_x, display_scroll_y, screen):
+    def draw(self, display_scroll_x, display_scroll_y):
         self.remove_dead_objects()
         self.move_enemies()
+        self.enemies_fire_projectiles()
         if self.draw_trees:
             for tree in self.trees:
                 tree.draw(display_scroll_x, display_scroll_y)
@@ -81,5 +102,7 @@ class World:
             projectile.draw()
         for enemy in self.enemies:
             enemy.draw(display_scroll_x, display_scroll_y)
+        for projectile in self.enemies_projectiles:
+            projectile.draw(display_scroll_x, display_scroll_y)
         for player in self.players:
             player.draw()

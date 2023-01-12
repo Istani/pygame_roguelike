@@ -1,11 +1,14 @@
 import pygame
 import random
+from src.projectile import EnemyProjectile
+from src.ai import AI
+from typing import Union
 
 
 class Enemy:
 
-    def __init__(self, display, enemy_images, hit_sound, ai, display_scroll_x, display_scroll_y, speed=1,
-                 dev_view=False, live_max=100):
+    def __init__(self, display, enemy_images, hit_sound, ai: AI, display_scroll_x: int, display_scroll_y: int, speed=1,
+                 dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=120):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
@@ -29,8 +32,11 @@ class Enemy:
         self.live_font = pygame.font.SysFont("comicsans", 15)
         self.dev_font = pygame.font.SysFont("comicsans", 18)
         self.knock_back_velocity_x = None
-        self.knock_back_velocity_x = None
+        self.knock_back_velocity_y = None
         self.knock_back_timer = 0
+        self.cool_down_timer = cool_down_timer
+        self.cool_down_timer_index = random.randint(0, self.cool_down_timer)
+        self.uses_projectiles = uses_projectiles
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
@@ -62,10 +68,18 @@ class Enemy:
         img = pygame.transform.flip(img, flip_x=self.flip, flip_y=False)
         live = self.live_font.render(str(self.live) + " /" + str(self.live_max), True, (255, 255, 255))
         self.display.blit(live, (self.x - 15 - display_scroll_x, self.y - 18 - display_scroll_y))
-
         if self.dev_view:
             pos = (self.x - display_scroll_x, self.y - display_scroll_y)
             dev_pos = self.dev_font.render(str(pos), True, (255, 255, 255))
             self.display.blit(dev_pos, (self.x - display_scroll_x - 50, self.y - display_scroll_y - 50))
             pygame.draw.rect(self.display, (255, 0, 0), self.rect)
         self.display.blit(img, (self.x - display_scroll_x, self.y - display_scroll_y))
+
+    def fire_projectile(self, player, animation_images) -> Union[EnemyProjectile, None]:
+        if not self.uses_projectiles:
+            return
+        if self.cool_down_timer_index == 0:
+            self.cool_down_timer_index = self.cool_down_timer
+            return EnemyProjectile(monster=self, player=player, animation_images=animation_images,
+                                   dev_view=self.dev_view)
+        self.cool_down_timer_index -= 1

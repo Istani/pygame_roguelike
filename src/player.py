@@ -23,6 +23,7 @@ class Player:
         self.display_scroll_y = 0
         self.display = display
 
+
     def move(self, keys):
         if keys[pygame.K_a]:
             self.display_scroll_x -= 5
