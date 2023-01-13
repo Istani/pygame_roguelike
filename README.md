@@ -26,6 +26,7 @@ Action roguelike in python with pygame engine.
 - Multiplayer
 
 # Bugs
+- Kill projectiles that are out of the map - FIXED
 - Sometimes enemy tremble because the change direction on each frame.
 - player projectiles move with the player.
 - No third try when playing (Respawn player Bug).
