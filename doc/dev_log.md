@@ -12,3 +12,5 @@ Added enemy projectiles to the game. Challenge improved.
 It is sometimes hard to see stuff because of the random selected assets, that needs to change soon. 
 Tomorrow I will improve the map generation. 
 I think atm the player has to click too much. Maybe add a better projectile or auto shoot.
+# 13.1.23
+To tired to rework the map. But add health bars on the first try. 
