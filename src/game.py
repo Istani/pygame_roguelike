@@ -59,7 +59,7 @@ class Game:
         self.state = State()
 
     def spawn_random_enemy(self):
-        rd = random.randint(1, 4)
+        rd = random.randint(1, 5)
         if rd == 1:
             enemy_sprite = self.assets.penis_images
             speed = 1
@@ -78,8 +78,14 @@ class Game:
             ai_nr = 0
             hit_sound = self.assets.hit_2
             fire = False
-        else:
+        elif rd == 4:
             enemy_sprite = self.assets.slime_images
+            speed = 1
+            ai_nr = 0
+            hit_sound = self.assets.hit_3
+            fire = False
+        else:
+            enemy_sprite = self.assets.rock_tobi_images
             speed = 1
             ai_nr = 0
             hit_sound = self.assets.hit_3
