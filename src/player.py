@@ -3,7 +3,7 @@ import pygame
 
 class Player:
 
-    def __init__(self, x, y, name, player_images, display):
+    def __init__(self, x, y, name, player_images, display, max_live=100):
         self.x = x
         self.y = y
         self.color = (255, 0, 0)
@@ -17,12 +17,13 @@ class Player:
         self.mask = pygame.mask.from_surface(self.walk_images[0])
         self.rect = self.walk_images[0].get_rect()
         self.kills = 0
-        self.live = 100
+        self.max_live = max_live
+        self.live = max_live
         self.alive = True
         self.display_scroll_x = 0
         self.display_scroll_y = 0
         self.display = display
-
+        self.live_bar_scale = 0.5
 
     def move(self, keys):
         if keys[pygame.K_a]:
@@ -40,6 +41,12 @@ class Player:
         if keys[pygame.K_s]:
             self.display_scroll_y += 5
 
+    def draw_health_bar(self):
+        rect_red = ((self.x, self.y - 25), (self.max_live * self.live_bar_scale, 10))
+        rect_green = ((self.x, self.y - 25), (self.live * self.live_bar_scale, 10))
+        pygame.draw.rect(self.display, (255, 0, 0), rect_red)
+        pygame.draw.rect(self.display, (0, 255, 0), rect_green)
+
     def draw(self):
         if not self.alive:
             return
@@ -55,3 +62,4 @@ class Player:
         if self.animation_counter > self.__animation_delay:
             self.__animation_index += 1
             self.animation_counter = 0
+        self.draw_health_bar()
