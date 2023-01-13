@@ -17,7 +17,7 @@ from src.state import State
 
 class Game:
 
-    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False):
+    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False):
         self.dev_view = dev_view
         self.player_name = os.environ.get('USERNAME')
         pygame.font.init()
@@ -45,6 +45,7 @@ class Game:
                          state=self.state)
         self.spawn_counter = 60
         self.spawn_counter_index = 0
+        self.use_player_gui = use_player_gui
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
@@ -110,7 +111,8 @@ class Game:
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y)
-        self.gui.draw()
+        if self.use_player_gui:
+            self.gui.draw()
 
     def main_loop(self):
         self.assets.background_music.play(loops=-1)

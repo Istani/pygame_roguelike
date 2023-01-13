@@ -13,7 +13,6 @@ Action roguelike in python with pygame engine.
 ## Soon 
 - Enemies keep distance to each other
 - player Items
-- Health bars
 - better main menu 
 - Leaderboard 
 - Better peng sound
@@ -21,18 +20,23 @@ Action roguelike in python with pygame engine.
 - class to manage font styles 
 - Enemies get different velocities on axis (snake is get better vertical speed)
 
+## later
+- Support for different resolutions and full screen 
+- Save games 
+
 ## Maybe later
 - Build system
+- Controller support
 - Multiplayer
 
 # Bugs
-- Kill projectiles that are out of the map - FIXED
 - Sometimes enemy tremble because the change direction on each frame.
 - player projectiles move with the player.
 - No third try when playing (Respawn player Bug).
 
 
 ## Done (but still not perfect)
+- Health bars 
 - better movement AI
 - Monsters do not spawn off-screen - FIXED 
 - Collision with player is buggy - FIXED
@@ -40,6 +44,8 @@ Action roguelike in python with pygame engine.
 - more env objects (like trees)
 - pysics, knock-back
 - enemy projectiles 
+- Kill projectiles that are out of the map - FIXED
+
 
 
 # Thanks for the inspiration
