@@ -74,15 +74,6 @@ class World:
                         enemy_projectile.alive = False
                         self.assets.hit_sound.play()
 
-    def enemy_would_collide_old(self, enemy):
-        for e in self.enemies:
-            if e != enemy:
-                offset_x = e.x - enemy.x
-                offset_y = e.y - enemy.y
-                if e.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
-                    return True
-        return False
-
     def move_enemies(self):
         for enemy in self.enemies:
             enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
