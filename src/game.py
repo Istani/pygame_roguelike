@@ -13,7 +13,7 @@ from src.enemy import Enemy
 from src.ai import AI
 from src.menu import Menu
 from src.state import State
-
+from src.map import Map
 
 class Game:
 
@@ -46,6 +46,7 @@ class Game:
         self.spawn_counter = 60
         self.spawn_counter_index = 0
         self.use_player_gui = use_player_gui
+        self.map = Map(tile_table=self.assets.grass_tile.get_tile_table())
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
@@ -124,7 +125,7 @@ class Game:
         self.assets.background_music.play(loops=-1)
         while True:
             self.display.fill(self.background_color)
-            self.assets.grass_tile.draw(self.display, self.player.display_scroll_x, self.player.display_scroll_y)
+            self.map.draw(self.display, self.player.display_scroll_x, self.player.display_scroll_y)
 
             if self.state.reset_game:
                 self.init_spawn()

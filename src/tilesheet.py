@@ -1,6 +1,4 @@
-import random
 import pygame
-from perlin_noise import PerlinNoise
 
 
 class TileSheet:
@@ -12,18 +10,6 @@ class TileSheet:
         self.n_columns = n_columns
         self.scale = scale
         self.tile_table = self.get_tile_table()
-        self.grass_tile_row = random.randint(0, 9)
-        self.grass_tile_column = random.randint(0, 10)
-        self.n_random_objects = 5
-        self.objects = []
-        for _ in range(self.n_random_objects):
-            r = random.randint(11, 13)
-            c = random.randint(0, 24)
-            if r == 11:
-                c = random.randint(10, 24)
-            self.objects.append((c, r))
-        self.object_draw = None
-        self.noise = PerlinNoise(octaves=6, seed=random.randint(0, 100000))
 
     def get_tile_table(self):
         tile_table = []
@@ -38,42 +24,6 @@ class TileSheet:
             tile_table.append(row)
         return tile_table
 
-    def __init_object_draw(self, n_row, n_cols, display_scroll_x, display_scroll_y, s, dev_print):
-        place = [[self.noise([i / n_row, j / n_cols]) for j in range(n_cols + 1)] for i in range(n_row + 1)]
-        self.object_draw = []
-        for x in range(n_row):
-            for y in range(n_cols):
-                tile_x = x * s - display_scroll_x
-                tile_y = y * s - display_scroll_y
-                if place[x][y] >= 0.7:
-                    tile_row, tile_column = self.objects[0]
-                elif place[x][y] >= 0.3:
-                    tile_row, tile_column = self.objects[1]
-                elif place[x][y] >= 0.1:
-                    tile_row, tile_column = self.objects[2]
-                elif place[x][y] >= 0.01:
-                    tile_row, tile_column = self.objects[3]
-                elif place[x][y] >= -0.001:
-                    tile_row, tile_column = self.objects[4]
-                else:
-                    tile_row, tile_column = self.objects[0]
-                if dev_print:
-                    print(tile_row, tile_column)
-                self.object_draw.append((self.tile_table[tile_row][tile_column], (tile_x, tile_y)))
 
-    def draw(self, screen, display_scroll_x, display_scroll_y, dev_print=False):
-        s = 32
-        n_row = int(pygame.display.get_window_size()[0] / s)
-        n_cols = int(pygame.display.get_window_size()[1] / s)
-        # draw all sprites
-        for x in range(n_row):
-            for y in range(n_cols):
-                tile_x = x * s - display_scroll_x
-                tile_y = y * s - display_scroll_y
-                screen.blit(self.tile_table[self.grass_tile_row][self.grass_tile_column],
-                            (tile_x, tile_y))
-        if self.object_draw is None:
-            self.__init_object_draw(n_row, n_cols, display_scroll_x, display_scroll_y, s, dev_print)
-        else:
-            for obj in self.object_draw:
-                screen.blit(obj[0], (obj[1][0] - display_scroll_x, obj[1][1] - display_scroll_y))
+
+
