@@ -17,7 +17,7 @@ Action roguelike in python with pygame engine.
 - better main menu 
 - Leaderboard 
 - Better peng sound
-
+- map borders
 - class to manage font styles 
 - Enemies get different velocities on axis (snake is get better vertical speed)
 
