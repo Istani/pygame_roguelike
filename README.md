@@ -7,10 +7,11 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-- fixed map size
+
 
 
 ## Soon 
+- Better map design and less randomness 
 - Enemies keep distance to each other
 - player Items
 - better main menu 
@@ -45,6 +46,7 @@ Action roguelike in python with pygame engine.
 - pysics, knock-back
 - enemy projectiles 
 - Kill projectiles that are out of the map - FIXED
+- fixed map size
 
 
 
