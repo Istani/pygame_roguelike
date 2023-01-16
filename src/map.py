@@ -21,8 +21,10 @@ class Map:
         self.tile_table = tile_table
         self.tile_size = tile_size
         self.scale = scale
-        self.screen_rows = int(pygame.display.get_window_size()[0] / self.tile_size)
-        self.screen_columns = int(pygame.display.get_window_size()[1] / self.tile_size)
+        self.screen_width = pygame.display.get_window_size()[0]
+        self.screen_height = pygame.display.get_window_size()[1]
+        self.screen_rows = int(self.screen_width / self.tile_size)
+        self.screen_columns = int(self.screen_height / self.tile_size)
         self.n_row = self.screen_rows * self.scale
         self.n_cols = self.screen_columns * self.scale
         self.noise = PerlinNoise(octaves=6, seed=random.randint(0, 100000))
@@ -50,7 +52,7 @@ class Map:
                 elif self.place[x][y] >= -0.001:
                     tile_row, tile_column = self.objects[4]
                 else:
-                    tile_row, tile_column = self.objects[0]
+                    tile_row, tile_column = self.grass_tile_row, self.grass_tile_column
                 self.object_draw.append(
                     (self.tile_table[tile_row][tile_column], (x * self.tile_size, y * self.tile_size)))
 
@@ -58,11 +60,7 @@ class Map:
         for obj in self.object_draw:
             x = obj[1][0] - display_scroll_x - self.screen_rows * self.tile_size
             y = obj[1][1] - display_scroll_y - self.screen_columns * self.tile_size
-            screen.blit(self.tile_table[self.grass_tile_row][self.grass_tile_column], (x, y))
-            screen.blit(obj[0], (x, y))
 
-
-if __name__ == '__main__':
-    map = Map()
-
-    print(map.place.shape)
+            if -50 < x < self.screen_width and -50 < y < self.screen_height:
+                screen.blit(self.tile_table[self.grass_tile_row][self.grass_tile_column], (x, y))
+                screen.blit(obj[0], (x, y))
