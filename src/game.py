@@ -91,7 +91,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 or event.button == 3:
                     if self.player.alive:
-                        self.assets.peng_sound.play()
+                        self.assets.shot_1.play()
                         self.word.projectiles.append(
                             Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
                                        animation_images=self.assets.projectiles_player, dev_view=self.dev_view))

@@ -14,13 +14,14 @@ class Assets:
 
         # sounds
         self.background_music = pygame.mixer.Sound("../assets/sounds/ohyeah.wav")
-        self.peng_sound = pygame.mixer.Sound("../assets/sounds/peng.wav")
         self.hit_sound = pygame.mixer.Sound("../assets/sounds/aua.wav")
         self.tree = pygame.image.load("../assets/environment/tree.png")
         self.hit_0 = pygame.mixer.Sound("../assets/sounds/hit_0.wav")
         self.hit_1 = pygame.mixer.Sound("../assets/sounds/hit_1.wav")
         self.hit_2 = pygame.mixer.Sound("../assets/sounds/hit_2.wav")
         self.hit_3 = pygame.mixer.Sound("../assets/sounds/hit_3.wav")
+        self.shot_0 = pygame.mixer.Sound("../assets/sounds/magic_0.wav")
+        self.shot_1 = pygame.mixer.Sound("../assets/sounds/shot_0.wav")
 
         # buttons
         self.button_resume_img = pygame.image.load("../assets/buttons/button_resume.png")
@@ -34,10 +35,8 @@ class Assets:
         # tiles
         self.grass_tile_img = pygame.image.load("../assets/environment/grass.png")
         self.projectile_tile_img = pygame.image.load("../assets/projectiles/fire_bullet_16x16.png")
-
         self.grass_tile = TileSheet(image=self.grass_tile_img, tile_size=16, n_columns=25, n_rows=14, scale=(32, 32))
         self.projectile_tile = TileSheet(image=self.projectile_tile_img, tile_size=16, n_rows=25, n_columns=40)
-
         self.projectiles_ass = [self.projectile_tile.tile_table[i][5] for i in range(17, 20)]
         self.projectiles_player = [self.projectile_tile.tile_table[i][11] for i in range(32, 36)]
 
@@ -61,6 +60,5 @@ class Assets:
         self.button_back_img = self.button_back_img.convert_alpha()
 
     def preprocess_sounds(self):
-        self.background_music.set_volume(0.3)
-        self.hit_sound.set_volume(0.3)
-        self.peng_sound.set_volume(0.2)
+        self.background_music.set_volume(0.15)
+        self.hit_sound.set_volume(0.15)

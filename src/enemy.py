@@ -10,7 +10,8 @@ from src.projectile import EnemyProjectile
 class Enemy:
 
     def __init__(self, display, enemy_images, hit_sound, ai: AI, display_scroll_x: int, display_scroll_y: int, speed=1,
-                 dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=120, projectile_images=None):
+                 dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=1000, projectile_images=None,
+                 shot_sound=None):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
@@ -41,6 +42,7 @@ class Enemy:
         self.uses_projectiles = uses_projectiles
         self.live_bar_scale = 0.3
         self.projectile_images = projectile_images
+        self.shot_sound = shot_sound
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
@@ -102,16 +104,14 @@ class SnakeEnemy(Enemy):
     def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
         super().__init__(display, enemy_images=assets.snake_images, hit_sound=assets.hit_2, ai=AI(ai_type=1),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
-                         dev_view=dev_view, live_max=75, uses_projectiles=False, cool_down_timer=1000,
-                         projectile_images=None)
+                         dev_view=dev_view, live_max=75)
 
 
 class SlimeEnemy(Enemy):
     def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
         super().__init__(display, enemy_images=assets.slime_images, hit_sound=assets.hit_3, ai=AI(ai_type=0),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=1,
-                         dev_view=dev_view, live_max=50, uses_projectiles=False, cool_down_timer=1000,
-                         projectile_images=None)
+                         dev_view=dev_view, live_max=50)
 
 
 class AssEnemy(Enemy):
@@ -119,12 +119,11 @@ class AssEnemy(Enemy):
         super().__init__(display, enemy_images=assets.ass_images, hit_sound=assets.hit_1, ai=AI(ai_type=1),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
                          dev_view=dev_view, live_max=100, uses_projectiles=True, cool_down_timer=300,
-                         projectile_images=assets.projectiles_ass)
+                         projectile_images=assets.projectiles_ass, shot_sound=assets.shot_0)
 
 
 class RockEnemy(Enemy):
     def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
         super().__init__(display, enemy_images=assets.rock_tobi_images, hit_sound=assets.hit_0, ai=AI(ai_type=0),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
-                         dev_view=dev_view, live_max=125, uses_projectiles=False, cool_down_timer=1000,
-                         projectile_images=None)
+                         dev_view=dev_view, live_max=125)
