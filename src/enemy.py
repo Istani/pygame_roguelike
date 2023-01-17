@@ -1,8 +1,10 @@
-import pygame
 import random
-from src.projectile import EnemyProjectile
-from src.ai import AI
 from typing import Union
+
+import pygame
+
+from src.ai import AI
+from src.projectile import EnemyProjectile
 
 
 class Enemy:
@@ -92,3 +94,32 @@ class Enemy:
             return EnemyProjectile(monster=self, player=player, animation_images=animation_images,
                                    dev_view=self.dev_view)
         self.cool_down_timer_index -= 1
+
+
+class SnakeEnemy(Enemy):
+
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.snake_images, hit_sound=assets.hit_2, ai=AI(ai_type=1),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
+                         dev_view=dev_view, live_max=75, uses_projectiles=False, cool_down_timer=1000)
+
+
+class SlimeEnemy(Enemy):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.slime_images, hit_sound=assets.hit_3, ai=AI(ai_type=0),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=1,
+                         dev_view=dev_view, live_max=50, uses_projectiles=False, cool_down_timer=1000)
+
+
+class AssEnemy(Enemy):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.ass_images, hit_sound=assets.hit_1, ai=AI(ai_type=1),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
+                         dev_view=dev_view, live_max=100, uses_projectiles=True, cool_down_timer=300)
+
+
+class RockEnemy(Enemy):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.rock_tobi_images, hit_sound=assets.hit_0, ai=AI(ai_type=0),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
+                         dev_view=dev_view, live_max=125, uses_projectiles=False, cool_down_timer=1000)
