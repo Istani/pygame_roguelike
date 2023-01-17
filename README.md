@@ -7,7 +7,7 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-
+- different projectiles 
 
 
 ## Soon 
