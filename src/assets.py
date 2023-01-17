@@ -11,7 +11,6 @@ class Assets:
         self.penis_images = [pygame.image.load(f"../assets/enemies/penis/l0_sprite_{i}.png") for i in range(1, 6)]
         self.ass_images = [pygame.image.load(f"../assets/enemies/ass/schritt{i}_ass1.png") for i in range(1, 4)]
         self.snake_images = [pygame.image.load(f"../assets/enemies/snake/l0_schlangenmann{i}.png") for i in range(1, 3)]
-        self.projectile_images = [pygame.image.load(f"../assets/projectiles/fire_bullet_{i}.png") for i in range(1, 4)]
         self.rock_tobi_images = [pygame.image.load(f"../assets/enemies/rock/rocktobi_{i}.png") for i in range(0, 2)]
 
         # sounds
@@ -35,13 +34,17 @@ class Assets:
 
         # tiles
         self.grass_tile_img = pygame.image.load("../assets/environment/grass.png")
+        self.projectile_tile_img = pygame.image.load("../assets/projectiles/fire_bullet_16x16.png")
+
         self.grass_tile = TileSheet(image=self.grass_tile_img, tile_size=16, n_columns=25, n_rows=14, scale=(32, 32))
+        self.projectile_tile = TileSheet(image=self.projectile_tile_img, tile_size=16, n_rows=25, n_columns=40)
+
+        self.projectile_images = [self.projectile_tile.tile_table[i][1] for i in range(5)]
 
     def preprocess_images(self):
         self.tree = pygame.transform.scale(self.tree, (150, 250))
         self.player_images = [pygame.transform.scale(img, (42, 52)) for img in self.player_images]
         self.slime_images = [pygame.transform.scale(img, (32, 32)) for img in self.slime_images]
-        self.projectile_images = [pygame.transform.scale(img, (20, 20)) for img in self.projectile_images]
         self.penis_images = [pygame.transform.scale(img, (64, 64)) for img in self.penis_images]
         self.snake_images = [pygame.transform.scale(img, (64, 64)) for img in self.snake_images]
         self.rock_tobi_images = [pygame.transform.scale(img, (64, 64)) for img in self.rock_tobi_images]
