@@ -38,7 +38,8 @@ class Assets:
         self.grass_tile = TileSheet(image=self.grass_tile_img, tile_size=16, n_columns=25, n_rows=14, scale=(32, 32))
         self.projectile_tile = TileSheet(image=self.projectile_tile_img, tile_size=16, n_rows=25, n_columns=40)
 
-        self.projectile_images = [self.projectile_tile.tile_table[i][1] for i in range(5)]
+        self.projectiles_ass = [self.projectile_tile.tile_table[i][5] for i in range(17, 20)]
+        self.projectiles_player = [self.projectile_tile.tile_table[i][11] for i in range(32, 36)]
 
     def preprocess_images(self):
         self.tree = pygame.transform.scale(self.tree, (150, 250))
@@ -46,6 +47,9 @@ class Assets:
         self.slime_images = [pygame.transform.scale(img, (32, 32)) for img in self.slime_images]
         self.snake_images = [pygame.transform.scale(img, (64, 64)) for img in self.snake_images]
         self.rock_tobi_images = [pygame.transform.scale(img, (64, 64)) for img in self.rock_tobi_images]
+
+        self.projectiles_ass = [pygame.transform.scale(img, (32, 32)) for img in self.projectiles_ass]
+        self.projectiles_player = [pygame.transform.scale(img, (32, 32)) for img in self.projectiles_player]
 
         # convert alpha
         self.button_resume_img = self.button_resume_img.convert_alpha()

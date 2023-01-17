@@ -94,7 +94,7 @@ class Game:
                         self.assets.peng_sound.play()
                         self.word.projectiles.append(
                             Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
-                                       animation_images=self.assets.projectile_images, dev_view=self.dev_view))
+                                       animation_images=self.assets.projectiles_player, dev_view=self.dev_view))
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y)
