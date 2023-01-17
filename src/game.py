@@ -9,11 +9,12 @@ from src.player import Player
 from src.gui import GUI
 from src.projectile import Projectile
 from src.natureobject import Tree
-from src.enemy import Enemy
+from src.enemy import SnakeEnemy, RockEnemy, AssEnemy, SlimeEnemy
 from src.ai import AI
 from src.menu import Menu
 from src.state import State
 from src.map import Map
+
 
 class Game:
 
@@ -60,41 +61,20 @@ class Game:
         self.state = State()
 
     def spawn_random_enemy(self):
-        rd = random.randint(1, 5)
+        rd = random.randint(1, 4)
         if rd == 1:
-            enemy_sprite = self.assets.penis_images
-            speed = 1
-            ai_nr = 1
-            hit_sound = self.assets.hit_0
-            fire = True
+            enemy = SlimeEnemy(self.display, self.assets, self.player.display_scroll_x, self.player.display_scroll_y,
+                               dev_view=self.dev_view)
         elif rd == 2:
-            enemy_sprite = self.assets.ass_images
-            speed = 2
-            ai_nr = 1
-            hit_sound = self.assets.hit_1
-            fire = True
+            enemy = SnakeEnemy(self.display, self.assets, self.player.display_scroll_x, self.player.display_scroll_y,
+                               dev_view=self.dev_view)
         elif rd == 3:
-            enemy_sprite = self.assets.snake_images
-            speed = 2
-            ai_nr = 0
-            hit_sound = self.assets.hit_2
-            fire = False
+            enemy = AssEnemy(self.display, self.assets, self.player.display_scroll_x, self.player.display_scroll_y,
+                             dev_view=self.dev_view)
         elif rd == 4:
-            enemy_sprite = self.assets.slime_images
-            speed = 1
-            ai_nr = 0
-            hit_sound = self.assets.hit_3
-            fire = False
-        else:
-            enemy_sprite = self.assets.rock_tobi_images
-            speed = 1
-            ai_nr = 0
-            hit_sound = self.assets.hit_3
-            fire = False
-        self.word.enemies.append(
-            Enemy(display=self.display, enemy_images=enemy_sprite, hit_sound=hit_sound,
-                  ai=AI(ai_type=ai_nr), speed=speed, display_scroll_x=self.player.display_scroll_x,
-                  display_scroll_y=self.player.display_scroll_y, dev_view=self.dev_view, uses_projectiles=fire))
+            enemy = RockEnemy(self.display, self.assets, self.player.display_scroll_x, self.player.display_scroll_y,
+                              dev_view=self.dev_view)
+        self.word.enemies.append(enemy)
 
     def spawn_enemies(self):
         if self.spawn_counter_index == self.spawn_counter:
@@ -111,10 +91,10 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 or event.button == 3:
                     if self.player.alive:
-                        self.assets.peng_sound.play()
+                        self.assets.shot_1.play()
                         self.word.projectiles.append(
                             Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
-                                       animation_images=self.assets.projectile_images, dev_view=self.dev_view))
+                                       animation_images=self.assets.projectiles_player, dev_view=self.dev_view))
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y)

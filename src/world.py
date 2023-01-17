@@ -16,9 +16,9 @@ class World:
     def enemies_fire_projectiles(self):
         for enemy in self.enemies:
             if enemy.uses_projectiles:
-                new_projectile = enemy.fire_projectile(animation_images=self.assets.projectile_images,
-                                                       player=self.players[0])
+                new_projectile = enemy.fire_projectile(player=self.players[0])
                 if new_projectile is not None:
+                    enemy.shot_sound.play()
                     self.enemies_projectiles.append(new_projectile)
 
     def check_collisions(self, display_scroll_x, display_scroll_y, use_rect=True):

@@ -7,16 +7,13 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-- different projectiles 
-
+- player Items
 
 ## Soon 
 - Better map design and less randomness 
 - Enemies keep distance to each other
-- player Items
 - better main menu 
 - Leaderboard 
-- Better peng sound
 - map borders
 - class to manage font styles 
 - Enemies get different velocities on axis (snake is get better vertical speed)
@@ -47,6 +44,8 @@ Action roguelike in python with pygame engine.
 - enemy projectiles 
 - Kill projectiles that are out of the map - FIXED
 - fixed map size
+- different projectiles 
+- Better peng sound
 
 
 

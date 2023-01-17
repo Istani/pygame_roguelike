@@ -1,14 +1,17 @@
-import pygame
 import random
-from src.projectile import EnemyProjectile
-from src.ai import AI
 from typing import Union
+
+import pygame
+
+from src.ai import AI
+from src.projectile import EnemyProjectile
 
 
 class Enemy:
 
     def __init__(self, display, enemy_images, hit_sound, ai: AI, display_scroll_x: int, display_scroll_y: int, speed=1,
-                 dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=120):
+                 dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=1000, projectile_images=None,
+                 shot_sound=None):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
@@ -38,6 +41,8 @@ class Enemy:
         self.cool_down_timer_index = random.randint(0, self.cool_down_timer)
         self.uses_projectiles = uses_projectiles
         self.live_bar_scale = 0.3
+        self.projectile_images = projectile_images
+        self.shot_sound = shot_sound
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
@@ -84,11 +89,41 @@ class Enemy:
         self.display.blit(img, (self.x - display_scroll_x, self.y - display_scroll_y))
         self.draw_health_bar(display_scroll_x, display_scroll_y)
 
-    def fire_projectile(self, player, animation_images) -> Union[EnemyProjectile, None]:
+    def fire_projectile(self, player) -> Union[EnemyProjectile, None]:
         if not self.uses_projectiles:
             return
         if self.cool_down_timer_index == 0:
             self.cool_down_timer_index = self.cool_down_timer
-            return EnemyProjectile(monster=self, player=player, animation_images=animation_images,
+            return EnemyProjectile(monster=self, player=player, animation_images=self.projectile_images,
                                    dev_view=self.dev_view)
         self.cool_down_timer_index -= 1
+
+
+class SnakeEnemy(Enemy):
+
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.snake_images, hit_sound=assets.hit_2, ai=AI(ai_type=1),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
+                         dev_view=dev_view, live_max=75)
+
+
+class SlimeEnemy(Enemy):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.slime_images, hit_sound=assets.hit_3, ai=AI(ai_type=0),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=1,
+                         dev_view=dev_view, live_max=50)
+
+
+class AssEnemy(Enemy):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.ass_images, hit_sound=assets.hit_1, ai=AI(ai_type=1),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
+                         dev_view=dev_view, live_max=100, uses_projectiles=True, cool_down_timer=300,
+                         projectile_images=assets.projectiles_ass, shot_sound=assets.shot_0)
+
+
+class RockEnemy(Enemy):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+        super().__init__(display, enemy_images=assets.rock_tobi_images, hit_sound=assets.hit_0, ai=AI(ai_type=0),
+                         display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
+                         dev_view=dev_view, live_max=125)
