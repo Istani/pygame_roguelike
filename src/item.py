@@ -9,6 +9,8 @@ class Item:
         self.x = x
         self.y = y
         self.alive = True
+        self.rect = self.image.get_rect()
+        self.increase_live_points_by = 10
 
     def draw(self, display_scroll_x, display_scroll_y):
         self.display.blit(self.image, (self.x - display_scroll_x, self.y - display_scroll_y))

@@ -66,6 +66,16 @@ class World:
                         enemy_projectile.alive = False
                         self.assets.hit_sound.play()
 
+            for item in self.items:
+                item.rect.x = item.x - display_scroll_x
+                item.rect.y = item.y - display_scroll_y
+                if player.rect.colliderect(item.rect):
+                    if item.alive:
+                        player.live += item.increase_live_points_by
+                        if player.live > player.max_live:
+                            player.live = player.max_live
+                        item.alive = False
+
     def move_enemies(self):
         for enemy in self.enemies:
             enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
@@ -74,6 +84,7 @@ class World:
         self.enemies_projectiles = [ep for ep in self.enemies_projectiles if ep.alive]
         self.enemies = [e for e in self.enemies if e.alive]
         self.projectiles = [p for p in self.projectiles if p.alive]
+        self.items = [i for i in self.items if i.alive]
 
     def draw(self, display_scroll_x, display_scroll_y):
         self.remove_dead_objects()
