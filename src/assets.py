@@ -1,11 +1,11 @@
 import pygame
-
 from src.tilesheet import TileSheet
 
 
 class Assets:
 
     def __init__(self):
+
         self.player_images = [pygame.image.load(f"../assets/player/player_walk_{i}.png") for i in range(4)]
         self.slime_images = [pygame.image.load(f"../assets/enemies/slime/slime_animation_{i}.png") for i in range(4)]
         self.ass_images = [pygame.image.load(f"../assets/enemies/ass/schritt{i}_ass1.png") for i in range(1, 4)]
@@ -35,10 +35,15 @@ class Assets:
         # tiles
         self.grass_tile_img = pygame.image.load("../assets/environment/grass.png")
         self.projectile_tile_img = pygame.image.load("../assets/projectiles/fire_bullet_16x16.png")
+        self.player_items_img = pygame.image.load("../assets/items/player_items.png")
+
         self.grass_tile = TileSheet(image=self.grass_tile_img, tile_size=16, n_columns=25, n_rows=14, scale=(32, 32))
         self.projectile_tile = TileSheet(image=self.projectile_tile_img, tile_size=16, n_rows=25, n_columns=40)
+        self.player_items_tile = TileSheet(image=self.player_items_img, tile_size=32, n_columns=16, n_rows=22)
+
         self.projectiles_ass = [self.projectile_tile.tile_table[i][5] for i in range(17, 20)]
         self.projectiles_player = [self.projectile_tile.tile_table[i][11] for i in range(32, 36)]
+        self.food_images = [self.player_items_tile.tile_table[i][14] for i in range(16)]
 
     def preprocess_images(self):
         self.tree = pygame.transform.scale(self.tree, (150, 250))
