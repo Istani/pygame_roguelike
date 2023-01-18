@@ -1,5 +1,3 @@
-import pygame
-
 
 class World:
 
@@ -94,7 +92,7 @@ class World:
             for tree in self.trees:
                 tree.draw(display_scroll_x, display_scroll_y)
         for projectile in self.projectiles:
-            projectile.draw()
+            projectile.draw(display_scroll_x, display_scroll_y)
         for item in self.items:
             item.draw(display_scroll_x, display_scroll_y)
         for enemy in self.enemies:

@@ -91,9 +91,12 @@ class Game:
                 if event.button == 1 or event.button == 3:
                     if self.player.alive:
                         self.assets.shot_1.play()
-                        self.word.projectiles.append(
-                            Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
-                                       animation_images=self.assets.projectiles_player, dev_view=self.dev_view))
+                        p = Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
+                                       animation_images=self.assets.projectiles_player, dev_view=self.dev_view)
+                        p.x = p.x + self.player.display_scroll_x
+                        p.y = p.y + self.player.display_scroll_y
+                        self.word.projectiles.append(p)
+
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
         self.word.draw(self.player.display_scroll_x, self.player.display_scroll_y)
