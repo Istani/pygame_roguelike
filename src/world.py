@@ -12,6 +12,7 @@ class World:
         self.assets = assets
         self.enemies_projectiles = []
         self.dev_view = dev_view
+        self.items = []
 
     def enemies_fire_projectiles(self):
         for enemy in self.enemies:
@@ -21,20 +22,14 @@ class World:
                     enemy.shot_sound.play()
                     self.enemies_projectiles.append(new_projectile)
 
-    def check_collisions(self, display_scroll_x, display_scroll_y, use_rect=True):
+    def check_collisions(self, display_scroll_x, display_scroll_y):
         for projectile in self.projectiles:
             for enemy in self.enemies:
                 collision = False
-                if use_rect:
-                    enemy.rect.x = enemy.x - display_scroll_x
-                    enemy.rect.y = enemy.y - display_scroll_y
-                    if projectile.rect.colliderect(enemy.rect):
-                        collision = True
-                else:
-                    offset_x = projectile.x - enemy.x - display_scroll_x
-                    offset_y = projectile.y - enemy.y - display_scroll_y
-                    if projectile.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
-                        collision = True
+                enemy.rect.x = enemy.x - display_scroll_x
+                enemy.rect.y = enemy.y - display_scroll_y
+                if projectile.rect.colliderect(enemy.rect):
+                    collision = True
                 if collision:
                     if enemy.alive:
                         enemy.hit_sound.play()
@@ -42,6 +37,9 @@ class World:
                     if enemy.live <= 0:
                         enemy.alive = False
                         projectile.player.kills += 1
+                        loot = enemy.drop_loot()
+                        if loot is not None:
+                            self.items.append(loot)
                     projectile.alive = False
                     enemy.knock_back_velocity_x = projectile.x_vel
                     enemy.knock_back_velocity_y = projectile.y_vel
@@ -52,16 +50,10 @@ class World:
             player.rect.y = player.y
             for enemy in self.enemies:
                 collision = False
-                if use_rect:
-                    enemy.rect.x = enemy.x - display_scroll_x
-                    enemy.rect.y = enemy.y - display_scroll_y
-                    if player.rect.colliderect(enemy.rect):
-                        collision = True
-                else:
-                    offset_x = player.x - enemy.x + display_scroll_x
-                    offset_y = player.y - enemy.y + display_scroll_y
-                    if player.mask.overlap(enemy.mask, (offset_x, offset_y)) is not None:
-                        collision = True
+                enemy.rect.x = enemy.x - display_scroll_x
+                enemy.rect.y = enemy.y - display_scroll_y
+                if player.rect.colliderect(enemy.rect):
+                    collision = True
                 if collision:
                     if not self.dev_view:
                         player.live -= 1
@@ -92,6 +84,8 @@ class World:
                 tree.draw(display_scroll_x, display_scroll_y)
         for projectile in self.projectiles:
             projectile.draw()
+        for item in self.items:
+            item.draw(display_scroll_x, display_scroll_y)
         for enemy in self.enemies:
             enemy.draw(display_scroll_x, display_scroll_y)
         for projectile in self.enemies_projectiles:
