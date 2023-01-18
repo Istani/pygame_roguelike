@@ -7,7 +7,8 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-- player Items
+- auto aim bot 
+
 
 ## Soon 
 - Better map design and less randomness 
@@ -29,12 +30,12 @@ Action roguelike in python with pygame engine.
 
 # Bugs
 - Sometimes enemy tremble because the change direction on each frame.
-- player projectiles move with the player.
 - No third try when playing (Respawn player Bug).
 
 
-### Sound design 
+# Sound design 
 - eat sound for picking up items that restore live points. 
+- item dropped sound
 
 ## Done (but still not perfect)
 - Health bars 
@@ -49,8 +50,8 @@ Action roguelike in python with pygame engine.
 - fixed map size
 - different projectiles 
 - Better peng sound
-
-
+- player projectiles move with the player - FIXED
+- player Items 
 
 # Thanks for the inspiration
 [ScriptLine Studios - Pygame Top Down Shooter Tutorial](https://youtu.be/sVbFS9qEl4Y)
