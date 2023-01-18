@@ -33,6 +33,9 @@ Action roguelike in python with pygame engine.
 - No third try when playing (Respawn player Bug).
 
 
+### Sound design 
+- eat sound for picking up items that restore live points. 
+
 ## Done (but still not perfect)
 - Health bars 
 - better movement AI
