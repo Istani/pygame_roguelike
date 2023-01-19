@@ -1,11 +1,11 @@
 import pygame
+
 from src.tilesheet import TileSheet
 
 
 class Assets:
 
     def __init__(self):
-
         self.player_images = [pygame.image.load(f"../assets/player/player_walk_{i}.png") for i in range(4)]
         self.slime_images = [pygame.image.load(f"../assets/enemies/slime/slime_animation_{i}.png") for i in range(4)]
         self.ass_images = [pygame.image.load(f"../assets/enemies/ass/schritt{i}_ass1.png") for i in range(1, 4)]
@@ -44,6 +44,7 @@ class Assets:
         self.projectiles_ass = [self.projectile_tile.tile_table[i][5] for i in range(17, 20)]
         self.projectiles_player = [self.projectile_tile.tile_table[i][11] for i in range(32, 36)]
         self.food_images = [self.player_items_tile.tile_table[i][14] for i in range(16)]
+        self.auto_shoot = [self.projectile_tile.tile_table[i][9] for i in range(27, 31)]
 
     def preprocess_images(self):
         self.tree = pygame.transform.scale(self.tree, (150, 250))
@@ -54,6 +55,8 @@ class Assets:
 
         self.projectiles_ass = [pygame.transform.scale(img, (32, 32)) for img in self.projectiles_ass]
         self.projectiles_player = [pygame.transform.scale(img, (32, 32)) for img in self.projectiles_player]
+        self.auto_shoot = [pygame.transform.scale(img, (32, 32)) for img in self.auto_shoot]
+
 
         # convert alpha
         self.button_resume_img = self.button_resume_img.convert_alpha()

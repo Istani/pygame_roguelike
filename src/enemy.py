@@ -111,21 +111,21 @@ class Enemy:
 
 class SnakeEnemy(Enemy):
 
-    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view):
         super().__init__(display, enemy_images=assets.snake_images, hit_sound=assets.hit_2, ai=AI(ai_type=1),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
                          dev_view=dev_view, live_max=75, loot=Loot(assets=assets), drop_foot_chane=0.1)
 
 
 class SlimeEnemy(Enemy):
-    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view):
         super().__init__(display, enemy_images=assets.slime_images, hit_sound=assets.hit_3, ai=AI(ai_type=0),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=1,
                          dev_view=dev_view, live_max=50, loot=Loot(assets=assets), drop_foot_chane=0.1)
 
 
 class AssEnemy(Enemy):
-    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view):
         super().__init__(display, enemy_images=assets.ass_images, hit_sound=assets.hit_1, ai=AI(ai_type=1),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
                          dev_view=dev_view, live_max=100, uses_projectiles=True, cool_down_timer=300,
@@ -134,7 +134,7 @@ class AssEnemy(Enemy):
 
 
 class RockEnemy(Enemy):
-    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view=False):
+    def __init__(self, display, assets, display_scroll_x, display_scroll_y, dev_view):
         super().__init__(display, enemy_images=assets.rock_tobi_images, hit_sound=assets.hit_0, ai=AI(ai_type=0),
                          display_scroll_x=display_scroll_x, display_scroll_y=display_scroll_y, speed=2,
                          dev_view=dev_view, live_max=125, loot=Loot(assets=assets),

@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import os
+import math
 
 from src.world import World
 from src.assets import Assets
@@ -49,7 +50,8 @@ class Game:
         self.map = Map(tile_table=self.assets.grass_tile.get_tile_table())
 
     def init_spawn(self):
-        self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display)
+        self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display,
+                             dev_view=self.dev_view)
         self.gui = GUI(self.display, self.player, center=[self.center_x, self.center_y])
         self.word = World(assets=self.assets, dev_view=self.dev_view)
         self.word.players.append(self.player)
@@ -70,7 +72,7 @@ class Game:
         elif rd == 3:
             enemy = AssEnemy(self.display, self.assets, self.player.display_scroll_x, self.player.display_scroll_y,
                              dev_view=self.dev_view)
-        elif rd == 4:
+        else:
             enemy = RockEnemy(self.display, self.assets, self.player.display_scroll_x, self.player.display_scroll_y,
                               dev_view=self.dev_view)
         self.word.enemies.append(enemy)
@@ -86,6 +88,22 @@ class Game:
         self.spawn_enemies()
         keys = pygame.key.get_pressed()
         mouse_x, mouse_y = pygame.mouse.get_pos()
+
+        # auto shoot
+        if self.player.alive:
+            if self.player.auto_shoot_index <= 0:
+                self.player.auto_shoot_index = self.player.auto_shoot_cool_down
+                if len(self.word.enemies) > 0:
+                    target = random.choice(self.word.enemies) # random target
+
+                    p = Projectile(y_mouse=target.y - self.player.display_scroll_y,
+                                   x_mouse=target.x - self.player.display_scroll_x,
+                                   player=self.player, speed=10,
+                                   animation_images=self.assets.auto_shoot, dev_view=self.dev_view)
+                    p.x = p.x + self.player.display_scroll_x
+                    p.y = p.y + self.player.display_scroll_y
+                    self.word.projectiles.append(p)
+
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 or event.button == 3:
