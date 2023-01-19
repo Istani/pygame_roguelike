@@ -7,7 +7,7 @@ Action roguelike in python with pygame engine.
 # PLANING
 
 ## Next to implement
-- auto aim bot 
+- bots as companions
 
 
 ## Soon 
@@ -18,6 +18,7 @@ Action roguelike in python with pygame engine.
 - map borders
 - class to manage font styles 
 - Enemies get different velocities on axis (snake is get better vertical speed)
+- better auto aim (fire to the next enemy)
 
 ## later
 - Support for different resolutions and full screen 
@@ -52,6 +53,7 @@ Action roguelike in python with pygame engine.
 - Better peng sound
 - player projectiles move with the player - FIXED
 - player Items 
+- auto aim bot 
 
 # Thanks for the inspiration
 [ScriptLine Studios - Pygame Top Down Shooter Tutorial](https://youtu.be/sVbFS9qEl4Y)
