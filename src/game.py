@@ -18,7 +18,7 @@ from src.map import Map
 
 class Game:
 
-    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False):
+    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False, auto_fire=False):
         self.dev_view = dev_view
         self.player_name = os.environ.get('USERNAME')
         pygame.font.init()
@@ -48,6 +48,7 @@ class Game:
         self.spawn_counter_index = 0
         self.use_player_gui = use_player_gui
         self.map = Map(tile_table=self.assets.grass_tile.get_tile_table())
+        self.auto_fire = auto_fire
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display,
@@ -89,20 +90,18 @@ class Game:
         keys = pygame.key.get_pressed()
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        # auto shoot
-        if self.player.alive:
-            if self.player.auto_shoot_index <= 0:
+        if self.auto_fire:
+            if self.player.alive and self.player.auto_shoot_index <= 0 and len(self.word.enemies) > 0:
                 self.player.auto_shoot_index = self.player.auto_shoot_cool_down
-                if len(self.word.enemies) > 0:
-                    target = random.choice(self.word.enemies) # random target
+                target = random.choice(self.word.enemies)  # random target
 
-                    p = Projectile(y_mouse=target.y - self.player.display_scroll_y,
-                                   x_mouse=target.x - self.player.display_scroll_x,
-                                   player=self.player, speed=10,
-                                   animation_images=self.assets.auto_shoot, dev_view=self.dev_view)
-                    p.x = p.x + self.player.display_scroll_x
-                    p.y = p.y + self.player.display_scroll_y
-                    self.word.projectiles.append(p)
+                p = Projectile(y_mouse=target.y - self.player.display_scroll_y,
+                               x_mouse=target.x - self.player.display_scroll_x,
+                               player=self.player, speed=10,
+                               animation_images=self.assets.auto_shoot, dev_view=self.dev_view)
+                p.x = p.x + self.player.display_scroll_x
+                p.y = p.y + self.player.display_scroll_y
+                self.word.projectiles.append(p)
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
