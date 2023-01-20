@@ -17,7 +17,6 @@ class World:
         self.dev_view = dev_view
         self.items = []
         self.companions = []
-        self.ai = AI(ai_type=None)
         self.companion_projectiles = []
 
     def enemies_fire_projectiles(self):
@@ -100,7 +99,7 @@ class World:
 
     def move_companions(self):
         for companion in self.companions:
-            self.ai.move_companion(self.players[0], companion)
+            companion.ai.move_companion(self.players[0], companion)
 
     def remove_dead_objects(self):
         self.enemies_projectiles = [ep for ep in self.enemies_projectiles if ep.alive]

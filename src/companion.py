@@ -1,5 +1,5 @@
 import pygame
-from typing import Union
+from src.ai import AI
 import random
 
 class Companion:
@@ -27,6 +27,8 @@ class Companion:
         self.uses_projectiles = True
         self.__cool_down_timer = cool_down_timer
         self.__cool_down_timer_index = random.randint(0, self.__cool_down_timer)
+
+        self.ai = AI(ai_type=None)
 
     def __select_draw_image(self):
         if self.__animation_counter > self.__animation_delay:
