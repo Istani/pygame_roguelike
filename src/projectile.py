@@ -57,3 +57,14 @@ class EnemyProjectile(Projectile):
         y = player.y + player.display_scroll_y
         super().__init__(x_mouse=x, y_mouse=y, player=monster, animation_images=animation_images,
                          damage=damage, speed=speed, knock_back_duration=knock_back_duration, dev_view=dev_view)
+
+
+class CompanionProjectile(Projectile):
+
+    def __init__(self, companion, enemy, animation_images, cool_down_timer=60, damage=10, speed=15,
+                 knock_back_duration=15,
+                 dev_view=False):
+        self.cool_down_timer = cool_down_timer
+        self.cool_down_timer_index = 0
+        super().__init__(x_mouse=enemy.x, y_mouse=enemy.y, player=companion, animation_images=animation_images,
+                         damage=damage, speed=speed, knock_back_duration=knock_back_duration, dev_view=dev_view)

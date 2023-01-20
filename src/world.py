@@ -1,4 +1,8 @@
+import random
+
 from src.ai import AI
+from src.projectile import CompanionProjectile
+
 
 class World:
 
@@ -14,6 +18,7 @@ class World:
         self.items = []
         self.companions = []
         self.ai = AI(ai_type=None)
+        self.companion_projectiles = []
 
     def enemies_fire_projectiles(self):
         for enemy in self.enemies:
@@ -23,8 +28,20 @@ class World:
                     enemy.shot_sound.play()
                     self.enemies_projectiles.append(new_projectile)
 
+    def companions_fire_projectiles(self):
+        for companion in self.companions:
+            if len(self.enemies) == 0:
+                return
+            if not companion.fire_projectile():
+                continue
+            target = random.choice(self.enemies)
+            new_projectile = CompanionProjectile(companion=companion, enemy=target,
+                                                 animation_images=self.assets.projectiles_player)
+            companion.shot_sound.play()
+            self.companion_projectiles.append(new_projectile)
+
     def check_collisions(self, display_scroll_x, display_scroll_y):
-        for projectile in self.projectiles:
+        for projectile in self.projectiles + self.companion_projectiles:
             for enemy in self.enemies:
                 collision = False
                 enemy.rect.x = enemy.x - display_scroll_x
@@ -97,10 +114,13 @@ class World:
         self.move_enemies()
         self.move_companions()
         self.enemies_fire_projectiles()
+        self.companions_fire_projectiles()
         if self.draw_trees:
             for tree in self.trees:
                 tree.draw(display_scroll_x, display_scroll_y)
         for projectile in self.projectiles:
+            projectile.draw(display_scroll_x, display_scroll_y)
+        for projectile in self.companion_projectiles:
             projectile.draw(display_scroll_x, display_scroll_y)
         for item in self.items:
             item.draw(display_scroll_x, display_scroll_y)

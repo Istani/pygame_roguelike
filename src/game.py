@@ -121,7 +121,8 @@ class Game:
                     c = Companion(self.display,
                                   x=mouse_x + self.player.display_scroll_x,
                                   y=mouse_y + self.player.display_scroll_y,
-                                  animation_images=self.assets.player_images)
+                                  animation_images=self.assets.player_images,
+                                  shot_sound=self.assets.shot_1)
                     self.word.companions.append(c)
 
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
