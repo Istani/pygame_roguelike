@@ -58,7 +58,7 @@ class Player:
         self.auto_shoot_index -= 1
         if self.live <= 0:
             self.alive = False
-        if self.__animation_index > 3:
+        if self.__animation_index >= len(self.walk_images):
             self.__animation_index = 0
         img = self.walk_images[self.__animation_index]
         if self.dev_view:

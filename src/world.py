@@ -1,3 +1,4 @@
+from src.ai import AI
 
 class World:
 
@@ -11,6 +12,8 @@ class World:
         self.enemies_projectiles = []
         self.dev_view = dev_view
         self.items = []
+        self.companions = []
+        self.ai = AI(ai_type=None)
 
     def enemies_fire_projectiles(self):
         for enemy in self.enemies:
@@ -78,15 +81,21 @@ class World:
         for enemy in self.enemies:
             enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
 
+    def move_companions(self):
+        for companion in self.companions:
+            self.ai.move_companion(self.players[0], companion)
+
     def remove_dead_objects(self):
         self.enemies_projectiles = [ep for ep in self.enemies_projectiles if ep.alive]
         self.enemies = [e for e in self.enemies if e.alive]
         self.projectiles = [p for p in self.projectiles if p.alive]
         self.items = [i for i in self.items if i.alive]
+        self.companions = [c for c in self.companions if c.alive]
 
     def draw(self, display_scroll_x, display_scroll_y):
         self.remove_dead_objects()
         self.move_enemies()
+        self.move_companions()
         self.enemies_fire_projectiles()
         if self.draw_trees:
             for tree in self.trees:
@@ -97,6 +106,8 @@ class World:
             item.draw(display_scroll_x, display_scroll_y)
         for enemy in self.enemies:
             enemy.draw(display_scroll_x, display_scroll_y)
+        for companion in self.companions:
+            companion.draw(display_scroll_x, display_scroll_y)
         for projectile in self.enemies_projectiles:
             projectile.draw(display_scroll_x, display_scroll_y)
         for player in self.players:
