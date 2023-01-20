@@ -3,6 +3,8 @@
 # pygame_roguelike
 Action roguelike in python with pygame engine.
 
+To play the game, install the packages listed in requirements.txt and run the play.py script. 
+
 
 # PLANING
 
