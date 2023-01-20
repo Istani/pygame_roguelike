@@ -9,12 +9,12 @@ To play the game, install the packages listed in requirements.txt and run the pl
 # PLANING
 
 ## Next to implement
-- bots as companions
+- Enemies keep distance to each other
 
 
 ## Soon 
+- different assets for companions
 - Better map design and less randomness 
-- Enemies keep distance to each other
 - better main menu 
 - Leaderboard 
 - map borders
@@ -32,15 +32,17 @@ To play the game, install the packages listed in requirements.txt and run the pl
 - Multiplayer
 
 # Bugs
+- Companion sprites stack
 - Sometimes enemy tremble because the change direction on each frame.
 - No third try when playing (Respawn player Bug).
-
+- player knock-back don`t work atm (maybe drop it, not sure)
 
 # Sound design 
 - eat sound for picking up items that restore live points. 
 - item dropped sound
 
 ## Done (but still not perfect)
+- bots as companions
 - Health bars 
 - better movement AI
 - Monsters do not spawn off-screen - FIXED 

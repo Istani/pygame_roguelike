@@ -13,6 +13,7 @@ from src.enemy import SnakeEnemy, RockEnemy, AssEnemy, SlimeEnemy
 from src.menu import Menu
 from src.state import State
 from src.map import Map
+from src.companion import Companion
 
 
 class Game:
@@ -104,7 +105,9 @@ class Game:
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1 or event.button == 3:
+
+                # shoot
+                if event.button == 1:
                     if self.player.alive:
                         self.assets.shot_1.play()
                         p = Projectile(y_mouse=mouse_y, x_mouse=mouse_x, player=self.player, speed=10,
@@ -112,6 +115,15 @@ class Game:
                         p.x = p.x + self.player.display_scroll_x
                         p.y = p.y + self.player.display_scroll_y
                         self.word.projectiles.append(p)
+
+                # spawn companion
+                if event.button == 3:
+                    c = Companion(self.display,
+                                  x=mouse_x + self.player.display_scroll_x,
+                                  y=mouse_y + self.player.display_scroll_y,
+                                  animation_images=self.assets.player_images,
+                                  shot_sound=self.assets.shot_1)
+                    self.word.companions.append(c)
 
         self.word.check_collisions(self.player.display_scroll_x, self.player.display_scroll_y)
         self.player.move(keys)
@@ -156,6 +168,3 @@ class Game:
                 self.game_loop_step(events)
             self.clock.tick(self.fps)
             pygame.display.update()
-
-
-

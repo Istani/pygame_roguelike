@@ -34,7 +34,8 @@ class AI:
         elif player.y + self.offset_y < enemy.y - player.display_scroll_y:
             enemy.y = enemy.y - enemy.speed
 
-    def move_enemy_aggressive(self, player, enemy):
+    @staticmethod
+    def move_enemy_aggressive(player, enemy):
         ex, ey = enemy.x - player.display_scroll_x, enemy.y - player.display_scroll_y
         if ex < player.x:
             enemy.x = enemy.x + enemy.speed
@@ -57,3 +58,7 @@ class AI:
             enemy.x -= enemy.knock_back_velocity_x
             enemy.y -= enemy.knock_back_velocity_y
             enemy.knock_back_timer -= 1
+
+    def move_companion(self, player, companion):
+        # companion stays near the player
+        self.move_enemy_default(player, enemy=companion)
