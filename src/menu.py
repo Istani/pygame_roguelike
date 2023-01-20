@@ -1,6 +1,6 @@
 import pygame
 
-from button import ButtonResume, ButtonQuite
+from src.button import ButtonResume, ButtonQuite
 
 
 class Menu:
