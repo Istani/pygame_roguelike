@@ -34,7 +34,7 @@ To play the game, install the packages listed in requirements.txt and run the pl
 # Bugs
 - Sometimes enemy tremble because the change direction on each frame.
 - No third try when playing (Respawn player Bug).
-
+- player knock-back don`t work atm (maybe drop it, not sure)
 
 # Sound design 
 - eat sound for picking up items that restore live points. 
