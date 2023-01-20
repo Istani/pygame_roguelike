@@ -2,18 +2,17 @@ import pygame
 import sys
 import random
 import os
-import math
 
-from src.world import World
-from src.assets import Assets
-from src.player import Player
-from src.gui import GUI
-from src.projectile import Projectile
-from src.natureobject import Tree
-from src.enemy import SnakeEnemy, RockEnemy, AssEnemy, SlimeEnemy
-from src.menu import Menu
-from src.state import State
-from src.map import Map
+from world import World
+from assets import Assets
+from player import Player
+from gui import GUI
+from projectile import Projectile
+from natureobject import Tree
+from enemy import SnakeEnemy, RockEnemy, AssEnemy, SlimeEnemy
+from menu import Menu
+from state import State
+from map import Map
 
 
 class Game:

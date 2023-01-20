@@ -3,9 +3,9 @@ from typing import Union
 
 import pygame
 
-from src.ai import AI
-from src.projectile import EnemyProjectile
-from src.item import Loot
+from ai import AI
+from projectile import EnemyProjectile
+from item import Loot
 
 
 class Enemy:

@@ -1,6 +1,6 @@
 import pygame
 
-from src.tilesheet import TileSheet
+from tilesheet import TileSheet
 
 
 class Assets:
