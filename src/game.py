@@ -2,7 +2,6 @@ import pygame
 import sys
 import random
 import os
-import math
 
 from src.world import World
 from src.assets import Assets
@@ -159,6 +158,4 @@ class Game:
             pygame.display.update()
 
 
-if __name__ == '__main__':
-    game = Game()
-    game.main_loop()
+

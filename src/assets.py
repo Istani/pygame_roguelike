@@ -6,36 +6,36 @@ from src.tilesheet import TileSheet
 class Assets:
 
     def __init__(self):
-        self.player_images = [pygame.image.load(f"../assets/player/player_walk_{i}.png") for i in range(4)]
-        self.slime_images = [pygame.image.load(f"../assets/enemies/slime/slime_animation_{i}.png") for i in range(4)]
-        self.ass_images = [pygame.image.load(f"../assets/enemies/ass/schritt{i}_ass1.png") for i in range(1, 4)]
-        self.snake_images = [pygame.image.load(f"../assets/enemies/snake/l0_schlangenmann{i}.png") for i in range(1, 3)]
-        self.rock_tobi_images = [pygame.image.load(f"../assets/enemies/rock/rocktobi_{i}.png") for i in range(0, 2)]
+        self.player_images = [pygame.image.load(f"assets/player/player_walk_{i}.png") for i in range(4)]
+        self.slime_images = [pygame.image.load(f"assets/enemies/slime/slime_animation_{i}.png") for i in range(4)]
+        self.ass_images = [pygame.image.load(f"assets/enemies/ass/schritt{i}_ass1.png") for i in range(1, 4)]
+        self.snake_images = [pygame.image.load(f"assets/enemies/snake/l0_schlangenmann{i}.png") for i in range(1, 3)]
+        self.rock_tobi_images = [pygame.image.load(f"assets/enemies/rock/rocktobi_{i}.png") for i in range(0, 2)]
 
         # sounds
-        self.background_music = pygame.mixer.Sound("../assets/sounds/ohyeah.wav")
-        self.hit_sound = pygame.mixer.Sound("../assets/sounds/aua.wav")
-        self.tree = pygame.image.load("../assets/environment/tree.png")
-        self.hit_0 = pygame.mixer.Sound("../assets/sounds/hit_0.wav")
-        self.hit_1 = pygame.mixer.Sound("../assets/sounds/hit_1.wav")
-        self.hit_2 = pygame.mixer.Sound("../assets/sounds/hit_2.wav")
-        self.hit_3 = pygame.mixer.Sound("../assets/sounds/hit_3.wav")
-        self.shot_0 = pygame.mixer.Sound("../assets/sounds/magic_0.wav")
-        self.shot_1 = pygame.mixer.Sound("../assets/sounds/shot_0.wav")
+        self.background_music = pygame.mixer.Sound("assets/sounds/ohyeah.wav")
+        self.hit_sound = pygame.mixer.Sound("assets/sounds/aua.wav")
+        self.tree = pygame.image.load("assets/environment/tree.png")
+        self.hit_0 = pygame.mixer.Sound("assets/sounds/hit_0.wav")
+        self.hit_1 = pygame.mixer.Sound("assets/sounds/hit_1.wav")
+        self.hit_2 = pygame.mixer.Sound("assets/sounds/hit_2.wav")
+        self.hit_3 = pygame.mixer.Sound("assets/sounds/hit_3.wav")
+        self.shot_0 = pygame.mixer.Sound("assets/sounds/magic_0.wav")
+        self.shot_1 = pygame.mixer.Sound("assets/sounds/shot_0.wav")
 
         # buttons
-        self.button_resume_img = pygame.image.load("../assets/buttons/button_resume.png")
-        self.button_options_img = pygame.image.load("../assets/buttons/button_options.png")
-        self.button_quit_img = pygame.image.load("../assets/buttons/button_quit.png")
-        self.button_video_img = pygame.image.load("../assets/buttons/button_video.png")
-        self.button_audio_img = pygame.image.load("../assets/buttons/button_audio.png")
-        self.button_keys_img = pygame.image.load("../assets/buttons/button_keys.png")
-        self.button_back_img = pygame.image.load("../assets/buttons/button_back.png")
+        self.button_resume_img = pygame.image.load("assets/buttons/button_resume.png")
+        self.button_options_img = pygame.image.load("assets/buttons/button_options.png")
+        self.button_quit_img = pygame.image.load("assets/buttons/button_quit.png")
+        self.button_video_img = pygame.image.load("assets/buttons/button_video.png")
+        self.button_audio_img = pygame.image.load("assets/buttons/button_audio.png")
+        self.button_keys_img = pygame.image.load("assets/buttons/button_keys.png")
+        self.button_back_img = pygame.image.load("assets/buttons/button_back.png")
 
         # tiles
-        self.grass_tile_img = pygame.image.load("../assets/environment/grass.png")
-        self.projectile_tile_img = pygame.image.load("../assets/projectiles/fire_bullet_16x16.png")
-        self.player_items_img = pygame.image.load("../assets/items/player_items.png")
+        self.grass_tile_img = pygame.image.load("assets/environment/grass.png")
+        self.projectile_tile_img = pygame.image.load("assets/projectiles/fire_bullet_16x16.png")
+        self.player_items_img = pygame.image.load("assets/items/player_items.png")
 
         self.grass_tile = TileSheet(image=self.grass_tile_img, tile_size=16, n_columns=25, n_rows=14, scale=(32, 32))
         self.projectile_tile = TileSheet(image=self.projectile_tile_img, tile_size=16, n_rows=25, n_columns=40)
