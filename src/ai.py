@@ -58,6 +58,9 @@ class AI:
             enemy.x -= enemy.knock_back_velocity_x
             enemy.y -= enemy.knock_back_velocity_y
             enemy.knock_back_timer -= 1
+            if enemy.knock_back_timer == 0:
+                enemy.knock_back_velocity_x = 0
+                enemy.knock_back_velocity_y = 0
 
     def move_companion(self, player, companion):
         # companion stays near the player
