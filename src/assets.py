@@ -42,7 +42,7 @@ class Assets:
         self.player_items_tile = TileSheet(image=self.player_items_img, tile_size=32, n_columns=16, n_rows=22)
 
         self.projectiles_ass = [self.projectile_tile.tile_table[i][5] for i in range(17, 20)]
-        self.projectiles_player = [self.projectile_tile.tile_table[i][11] for i in range(32, 36)]
+        self.projectiles_player = [self.projectile_tile.tile_table[i][11] for i in range(32, 35)]
         self.food_images = [self.player_items_tile.tile_table[i][14] for i in range(16)]
         self.auto_shoot = [self.projectile_tile.tile_table[i][9] for i in range(27, 31)]
 
