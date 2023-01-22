@@ -9,6 +9,7 @@ To play the game, install the packages listed in requirements.txt and run the pl
 # PLANING
 
 ## Next to implement
+- BUG: something is wrong with the enemy knock-back from companion projecties 
 - Enemies keep distance to each other
 
 
