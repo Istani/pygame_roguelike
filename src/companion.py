@@ -4,7 +4,7 @@ import random
 
 class Companion:
 
-    def __init__(self, display, x, y, animation_images, shot_sound, cool_down_timer=60):
+    def __init__(self, display, x, y, animation_images, shot_sound, cool_down_timer=200, dev_view=False):
 
         # args
         self.display = display
@@ -22,6 +22,7 @@ class Companion:
         self.alive = True
         self.speed = 1
         self.kills = 0
+        self.dev_view = dev_view
 
         # handel shooting
         self.uses_projectiles = True
