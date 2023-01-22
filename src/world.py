@@ -1,6 +1,5 @@
 import random
 
-from src.ai import AI
 from src.projectile import CompanionProjectile
 
 
@@ -40,7 +39,7 @@ class World:
             self.companion_projectiles.append(new_projectile)
 
     def check_collisions(self, display_scroll_x, display_scroll_y):
-        for projectile in self.projectiles + self.companion_projectiles:
+        for projectile in self.projectiles:
             for enemy in self.enemies:
                 collision = False
                 enemy.rect.x = enemy.x - display_scroll_x
@@ -50,6 +49,32 @@ class World:
                 if collision:
                     if enemy.alive:
                         enemy.hit_sound.play()
+                    enemy.live -= projectile.damage
+                    if enemy.live <= 0:
+                        enemy.alive = False
+                        projectile.player.kills += 1
+                        loot = enemy.drop_loot()
+                        if loot is not None:
+                            self.items.append(loot)
+                    projectile.alive = False
+                    enemy.knock_back_velocity_x = projectile.x_vel
+                    enemy.knock_back_velocity_y = projectile.y_vel
+                    enemy.knock_back_timer = projectile.knock_back_duration
+
+        for projectile in self.companion_projectiles:
+
+            projectile.rect.x = projectile.x - display_scroll_x
+            projectile.rect.y = projectile.y - display_scroll_y
+
+            for enemy in self.enemies:
+
+                enemy.rect.x = enemy.x - display_scroll_x
+                enemy.rect.y = enemy.y - display_scroll_y
+
+                if projectile.rect.colliderect(enemy.rect):
+                    if not enemy.alive:
+                        continue
+                    enemy.hit_sound.play()
                     enemy.live -= projectile.damage
                     if enemy.live <= 0:
                         enemy.alive = False
@@ -107,6 +132,9 @@ class World:
         self.projectiles = [p for p in self.projectiles if p.alive]
         self.items = [i for i in self.items if i.alive]
         self.companions = [c for c in self.companions if c.alive]
+
+    def remove_out_of_screen_projectiles(self):
+        pass
 
     def draw(self, display_scroll_x, display_scroll_y):
         self.remove_dead_objects()

@@ -9,7 +9,6 @@ To play the game, install the packages listed in requirements.txt and run the pl
 # PLANING
 
 ## Next to implement
-- BUG: something is wrong with the enemy knock-back from companion projecties 
 - Enemies keep distance to each other
 
 
@@ -59,6 +58,8 @@ To play the game, install the packages listed in requirements.txt and run the pl
 - player projectiles move with the player - FIXED
 - player Items 
 - auto aim bot 
+- BUG: something is wrong with the enemy knock-back from companion projectiles 
+
 
 # Thanks for the inspiration
 [ScriptLine Studios - Pygame Top Down Shooter Tutorial](https://youtu.be/sVbFS9qEl4Y)

@@ -5,7 +5,7 @@ import math
 class Projectile:
 
     def __init__(self, x_mouse, y_mouse, player, animation_images, damage=50, speed=15,
-                 knock_back_duration=15, dev_view=False):
+                 knock_back_duration=15, dev_view=False, dev_view_color=(0, 0, 255)):
         self.x = int(player.x)
         self.y = int(player.y)
         self.x_mouse = x_mouse
@@ -26,8 +26,13 @@ class Projectile:
         self.dev_view = dev_view
         self.damage = damage
         self.knock_back_duration = knock_back_duration
+        self.dev_view_color = dev_view_color
+        self.tile_to_live = 300
 
     def draw(self, display_scroll_x=0, display_scroll_y=0):
+        self.tile_to_live -= 1
+        if self.tile_to_live < 1:
+            self.alive = False
         if not self.alive:
             return
         self.x -= int(self.x_vel)
@@ -38,7 +43,7 @@ class Projectile:
         self.rect.x = self.x - display_scroll_x
         self.rect.y = self.y - display_scroll_y
         if self.dev_view:
-            pygame.draw.rect(self.display, (0, 0, 255), self.rect)
+            pygame.draw.rect(self.display, self.dev_view_color, self.rect)
         self.display.blit(self.animation_images[self.__animation_index],
                           (self.x - display_scroll_x, self.y - display_scroll_y))
         self.animation_counter += 1
@@ -61,10 +66,9 @@ class EnemyProjectile(Projectile):
 
 class CompanionProjectile(Projectile):
 
-    def __init__(self, companion, enemy, animation_images, cool_down_timer=60, damage=10, speed=15,
-                 knock_back_duration=15,
-                 dev_view=False):
-        self.cool_down_timer = cool_down_timer
-        self.cool_down_timer_index = 0
+    def __init__(self, companion, enemy, animation_images, damage=10, speed=5,
+                 knock_back_duration=15):
+        dev_view = companion.dev_view
         super().__init__(x_mouse=enemy.x, y_mouse=enemy.y, player=companion, animation_images=animation_images,
-                         damage=damage, speed=speed, knock_back_duration=knock_back_duration, dev_view=dev_view)
+                         damage=damage, speed=speed, knock_back_duration=knock_back_duration, dev_view=dev_view,
+                         dev_view_color=(0, 255, 0))
