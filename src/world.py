@@ -1,5 +1,8 @@
 import random
 
+import pygame.draw
+import math
+
 from src.projectile import CompanionProjectile
 
 
@@ -136,6 +139,21 @@ class World:
     def remove_out_of_screen_projectiles(self):
         pass
 
+    def draw_dev_view_objects(self, display_scroll_x, display_scroll_y):
+        if len(self.enemies) < 1:
+            return
+
+        # draw a line from the player to the closest enemy
+        p = self.players[0]
+        e = None
+        d = None
+        for e_i in self.enemies:
+            d_i = math.dist((p.x, p.y), (e_i.x - display_scroll_x, e_i.y - display_scroll_y))
+            if d is None or d_i < d:
+                e = e_i
+                d = d_i
+        pygame.draw.line(p.display, (255, 255, 255), (p.x, p.y), (e.x - display_scroll_x, e.y - display_scroll_y), 5)
+
     def draw(self, display_scroll_x, display_scroll_y):
         self.remove_dead_objects()
         self.move_enemies()
@@ -159,3 +177,6 @@ class World:
             projectile.draw(display_scroll_x, display_scroll_y)
         for player in self.players:
             player.draw()
+
+        if self.dev_view:
+            self.draw_dev_view_objects(display_scroll_x, display_scroll_y)
