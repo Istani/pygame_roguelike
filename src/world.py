@@ -78,7 +78,10 @@ class World:
                 if projectile.rect.colliderect(enemy.rect):
                     if not enemy.alive:
                         continue
-                    enemy.hit_sound.play()
+                    if enemy.hit_sound_cool_down == 0:
+                        enemy.hit_sound.play()
+                        enemy.hit_sound_cool_down = 10
+                    enemy.hit_sound_cool_down -= 1
                     enemy.live -= projectile.damage
                     if enemy.live <= 0:
                         enemy.alive = False

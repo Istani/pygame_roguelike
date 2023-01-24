@@ -47,6 +47,7 @@ class Enemy:
         self.drop_foot_chane = drop_foot_chane
         self.loot = loot
         self.view_range = view_range
+        self.hit_sound_cool_down = 0
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
