@@ -139,9 +139,30 @@ class World:
     def remove_out_of_screen_projectiles(self):
         pass
 
+    def dev_view_draw_line_to_close_enemies(self, display_scroll_x, display_scroll_y):
+        if len(self.enemies) < 2:
+            return
+
+        for enemy in self.enemies:
+            # draw a line from the player to the closest enemy
+            p = enemy
+            e = None
+            d = None
+            for e_i in self.enemies:
+                if e_i == enemy:
+                    continue
+                d_i = math.dist((p.x - display_scroll_x, p.y - display_scroll_y),
+                                (e_i.x - display_scroll_x, e_i.y - display_scroll_y))
+                if d is None or d_i < d:
+                    e = e_i
+                    d = d_i
+            pygame.draw.line(p.display, (255, 255, 255), (p.x - display_scroll_x, p.y - display_scroll_y),
+                             (e.x - display_scroll_x, e.y - display_scroll_y), 5)
+
     def draw_dev_view_objects(self, display_scroll_x, display_scroll_y):
         if len(self.enemies) < 1:
             return
+        self.dev_view_draw_line_to_close_enemies(display_scroll_x, display_scroll_y)
 
         # draw a line from the player to the closest enemy
         p = self.players[0]
