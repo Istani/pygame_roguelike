@@ -18,7 +18,7 @@ from src.companion import Companion
 
 class Game:
 
-    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False, auto_fire=False):
+    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False, auto_fire=False, no_music=False):
         self.dev_view = dev_view
         self.player_name = os.environ.get('USERNAME')
         pygame.font.init()
@@ -49,6 +49,7 @@ class Game:
         self.use_player_gui = use_player_gui
         self.map = Map(tile_table=self.assets.grass_tile.get_tile_table())
         self.auto_fire = auto_fire
+        self.no_music = no_music
 
     def init_spawn(self):
         self.player = Player(self.center_x, self.center_y, self.player_name, self.assets.player_images, self.display,
@@ -132,7 +133,8 @@ class Game:
             self.gui.draw()
 
     def main_loop(self):
-        self.assets.background_music.play(loops=-1)
+        if not self.no_music:
+            self.assets.background_music.play(loops=-1)
         while True:
             self.display.fill(self.background_color)
             self.map.draw(self.display, self.player.display_scroll_x, self.player.display_scroll_y)
