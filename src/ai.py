@@ -102,7 +102,7 @@ class AI:
         y_vel = math.sin(angle) * speed
         return x_vel, y_vel
 
-    def swarm_ai(self, player, enemy, other_enemies, avoid_factor=0.3):
+    def swarm_ai(self, player, enemy, other_enemies, avoid_factor=0.05):
         # we want to steer to the play but avoid getting to close to other enemies
 
         # first calculate the vector where the enemy wants to move to the player
@@ -122,8 +122,13 @@ class AI:
                 seperation_y += ey - e_i.y
 
         n = len(other_enemies)
-        vector_x += seperation_x //n   * avoid_factor
-        vector_y += seperation_y  // n* avoid_factor
+        vector_x += (seperation_x / n) * avoid_factor
+        vector_y += (seperation_y / n) * avoid_factor
 
         enemy.x += vector_x
         enemy.y += vector_y
+
+        if ex < player.x:
+            enemy.flip = False
+        elif ex > player.x:
+            enemy.flip = True
