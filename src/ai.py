@@ -1,4 +1,5 @@
 import random
+import math
 
 
 class AI:
@@ -65,3 +66,64 @@ class AI:
     def move_companion(self, player, companion):
         # companion stays near the player
         self.move_enemy_default(player, enemy=companion)
+
+    @staticmethod
+    def __get_vector(enemy, player):
+
+        # get the vector from the enemy to the player
+
+        ex = enemy.x - player.display_scroll_x
+        ey = enemy.y - player.display_scroll_y
+
+        # 1. get the vector distance
+        distance_x = ex - player.x
+        distance_y = ey - player.y
+
+        # 2. normalize that to a unit vector
+        norm = math.sqrt(math.pow(distance_x, 2) + math.pow(distance_y, 2))
+        direction_x = distance_x / norm
+        direction_y = distance_y / norm
+
+        # 3. Finally, we want the velocity vector.
+        # You get that by multiplying the direction (the unit vector) by the speed.
+        vector_x = direction_x * math.sqrt(2)
+        vector_y = direction_y * math.sqrt(2)
+
+        # otherwise the enemy run away from the player
+        vector_x = vector_x * -1
+        vector_y = vector_y * -1
+
+        return vector_x, vector_y
+
+    @staticmethod
+    def __vector_to_velocity(enemy, vector_x, vector_y, speed=1):
+        angle = math.atan2(enemy.x - vector_x, enemy.y - vector_y)
+        x_vel = math.cos(angle) * speed
+        y_vel = math.sin(angle) * speed
+        return x_vel, y_vel
+
+    def swarm_ai(self, player, enemy, other_enemies, avoid_factor=0.3):
+        # we want to steer to the play but avoid getting to close to other enemies
+
+        # first calculate the vector where the enemy wants to move to the player
+        vector_x, vector_y = self.__get_vector(enemy, player)
+
+        ex = enemy.x - player.display_scroll_x
+        ey = enemy.y - player.display_scroll_y
+
+        seperation_x, seperation_y = 0, 0
+        for e_i in other_enemies:
+            if e_i == enemy:
+                continue
+            # only separate form to close other enemies
+            d = math.dist((ex, ey), (e_i.x - player.display_scroll_x, e_i.y - player.display_scroll_y))
+            if d < enemy.view_range:
+                seperation_x += ex - e_i.x
+                seperation_y += ey - e_i.y
+
+        n = len(other_enemies)
+        vector_x += seperation_x //n   * avoid_factor
+        vector_y += seperation_y  // n* avoid_factor
+
+        enemy.x += vector_x
+        enemy.y += vector_y

@@ -4,7 +4,7 @@ import pygame.draw
 import math
 
 from src.projectile import CompanionProjectile
-
+from src.ai import  AI
 
 class World:
 
@@ -20,6 +20,7 @@ class World:
         self.items = []
         self.companions = []
         self.companion_projectiles = []
+        self.ai = AI(ai_type=None)
 
     def enemies_fire_projectiles(self):
         for enemy in self.enemies:
@@ -121,9 +122,15 @@ class World:
                             player.live = player.max_live
                         item.alive = False
 
-    def move_enemies(self):
-        for enemy in self.enemies:
-            enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
+    def move_enemies(self, swarm_ai=True):
+        if swarm_ai:
+            for enemy in self.enemies:
+                self.ai.swarm_ai(player=self.players[0],
+                                 enemy=enemy,
+                                 other_enemies=self.enemies)
+        else:
+            for enemy in self.enemies:
+                enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
 
     def move_companions(self):
         for companion in self.companions:
@@ -141,7 +148,7 @@ class World:
 
     def dev_view_draw_view_circle(self, display_scroll_x, display_scroll_y):
         for enemy in self.enemies:
-            x = enemy.x  + (enemy.rect.width //2) - display_scroll_x
+            x = enemy.x + (enemy.rect.width //2) - display_scroll_x
             y = enemy.y + (enemy.rect.height //2) -display_scroll_y
             pygame.draw.circle(enemy.display, (255, 255, 255), (x, y), enemy.view_range, 5)
 

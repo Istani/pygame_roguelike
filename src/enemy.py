@@ -12,7 +12,7 @@ class Enemy:
 
     def __init__(self, display, enemy_images, hit_sound, ai: AI, display_scroll_x: int, display_scroll_y: int, speed=1,
                  dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=1000, projectile_images=None,
-                 shot_sound=None, drop_foot_chane=0.0, loot=None, view_range=300):
+                 shot_sound=None, drop_foot_chane=0.0, loot=None, view_range=50):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
