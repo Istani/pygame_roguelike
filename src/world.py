@@ -139,6 +139,12 @@ class World:
     def remove_out_of_screen_projectiles(self):
         pass
 
+    def dev_view_draw_view_circle(self, display_scroll_x, display_scroll_y):
+        for enemy in self.enemies:
+            x = enemy.x  + (enemy.rect.width //2) - display_scroll_x
+            y = enemy.y + (enemy.rect.height //2) -display_scroll_y
+            pygame.draw.circle(enemy.display, (255, 255, 255), (x, y), enemy.view_range, 5)
+
     def dev_view_draw_line_to_close_enemies(self, display_scroll_x, display_scroll_y):
         if len(self.enemies) < 2:
             return
@@ -163,7 +169,7 @@ class World:
         if len(self.enemies) < 1:
             return
         self.dev_view_draw_line_to_close_enemies(display_scroll_x, display_scroll_y)
-
+        self.dev_view_draw_view_circle(display_scroll_x, display_scroll_y)
         # draw a line from the player to the closest enemy
         p = self.players[0]
         e = None
@@ -181,6 +187,9 @@ class World:
         self.move_companions()
         self.enemies_fire_projectiles()
         self.companions_fire_projectiles()
+        if self.dev_view:
+            self.draw_dev_view_objects(display_scroll_x, display_scroll_y)
+
         if self.draw_trees:
             for tree in self.trees:
                 tree.draw(display_scroll_x, display_scroll_y)
@@ -199,5 +208,3 @@ class World:
         for player in self.players:
             player.draw()
 
-        if self.dev_view:
-            self.draw_dev_view_objects(display_scroll_x, display_scroll_y)
