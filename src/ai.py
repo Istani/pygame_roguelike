@@ -81,6 +81,8 @@ class AI:
 
         # 2. normalize that to a unit vector
         norm = math.sqrt(math.pow(distance_x, 2) + math.pow(distance_y, 2))
+        if norm == 0:
+            norm = 1
         direction_x = distance_x / norm
         direction_y = distance_y / norm
 
@@ -102,7 +104,56 @@ class AI:
         y_vel = math.sin(angle) * speed
         return x_vel, y_vel
 
-    def swarm_ai(self, player, enemy, other_enemies, avoid_factor=0.05):
+    @staticmethod
+    def __move_towards_player_velocity(enemy, player, center=None):
+        if center is not None:
+            x_dist, y_dist = center
+        else:
+            x_dist = enemy.rect.centerx - player.rect.centerx
+            y_dist = enemy.rect.centery - player.rect.centery
+        velocity = enemy.speed
+        dist = (x_dist ** 2 + y_dist ** 2) ** 0.5
+        if dist == 0:
+            dist = 1
+        x_vel = x_dist / dist * velocity
+        y_vel = y_dist / dist * velocity
+        return x_vel, y_vel
+
+    @staticmethod
+    def __center_of_group(enemies):
+        center_x, center_y = 0, 0
+        for enemy in enemies:
+            center_x += enemy.x
+            center_y += enemy.y
+        n = len(enemies)
+        return (center_x / n), (center_y / n)
+
+    def swarm_ai(self, player, enemy, other_enemies, avoid_factor=1):
+        ex = enemy.x - player.display_scroll_x
+        sx, sy = player.display_scroll_x, player.display_scroll_y
+        other_enemies = [e for e in other_enemies if e != enemy]
+        other_enemies = [e for e in other_enemies if
+                         math.dist((e.x + sx, e.y + sy), (enemy.x + sx, enemy.y + sy)) < 100]
+        n = len(other_enemies)
+        if  n > 1 and random.random() < 0.5:
+            cx , cy = self.__center_of_group(other_enemies)
+            cx -= player.display_scroll_x
+            cy -= player.display_scroll_y
+            x_vel, y_vel = self.__move_towards_player_velocity(enemy, player=None,
+                                                               center=(cx, cy))
+            enemy.x += x_vel
+            enemy.y += y_vel
+        else:
+            x_vel, y_vel = self.__move_towards_player_velocity(enemy, player)
+            enemy.x -= x_vel
+            enemy.y -= y_vel
+
+        if ex < player.x:
+            enemy.flip = False
+        elif ex > player.x:
+            enemy.flip = True
+
+    def swarm_ai_old(self, player, enemy, other_enemies, avoid_factor=1):
         # we want to steer to the play but avoid getting to close to other enemies
 
         # first calculate the vector where the enemy wants to move to the player
@@ -122,8 +173,8 @@ class AI:
                 seperation_y += ey - e_i.y
 
         n = len(other_enemies)
-        vector_x += (seperation_x / n) * avoid_factor
-        vector_y += (seperation_y / n) * avoid_factor
+        vector_x += ((seperation_x / n) * avoid_factor)
+        vector_y += ((seperation_y / n) * avoid_factor)
 
         enemy.x += vector_x
         enemy.y += vector_y
