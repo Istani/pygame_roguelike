@@ -1,7 +1,10 @@
 import random
 
-from src.projectile import CompanionProjectile
+import pygame.draw
+import math
 
+from src.projectile import CompanionProjectile
+from src.ai import  AI
 
 class World:
 
@@ -17,6 +20,7 @@ class World:
         self.items = []
         self.companions = []
         self.companion_projectiles = []
+        self.ai = AI(ai_type=None)
 
     def enemies_fire_projectiles(self):
         for enemy in self.enemies:
@@ -74,7 +78,10 @@ class World:
                 if projectile.rect.colliderect(enemy.rect):
                     if not enemy.alive:
                         continue
-                    enemy.hit_sound.play()
+                    if enemy.hit_sound_cool_down == 0:
+                        enemy.hit_sound.play()
+                        enemy.hit_sound_cool_down = 10
+                    enemy.hit_sound_cool_down -= 1
                     enemy.live -= projectile.damage
                     if enemy.live <= 0:
                         enemy.alive = False
@@ -118,9 +125,15 @@ class World:
                             player.live = player.max_live
                         item.alive = False
 
-    def move_enemies(self):
-        for enemy in self.enemies:
-            enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
+    def move_enemies(self, swarm_ai=True):
+        if swarm_ai:
+            for enemy in self.enemies:
+                self.ai.swarm_ai(player=self.players[0],
+                                 enemy=enemy,
+                                 other_enemies=self.enemies)
+        else:
+            for enemy in self.enemies:
+                enemy.ai.move_enemy(player=self.players[0], enemy=enemy)
 
     def move_companions(self):
         for companion in self.companions:
@@ -136,12 +149,57 @@ class World:
     def remove_out_of_screen_projectiles(self):
         pass
 
+    def dev_view_draw_view_circle(self, display_scroll_x, display_scroll_y):
+        for enemy in self.enemies:
+            x = enemy.x + (enemy.rect.width //2) - display_scroll_x
+            y = enemy.y + (enemy.rect.height //2) -display_scroll_y
+            pygame.draw.circle(enemy.display, (255, 255, 255), (x, y), enemy.view_range, 5)
+
+    def dev_view_draw_line_to_close_enemies(self, display_scroll_x, display_scroll_y):
+        if len(self.enemies) < 2:
+            return
+
+        for enemy in self.enemies:
+            # draw a line from the player to the closest enemy
+            p = enemy
+            e = None
+            d = None
+            for e_i in self.enemies:
+                if e_i == enemy:
+                    continue
+                d_i = math.dist((p.x - display_scroll_x, p.y - display_scroll_y),
+                                (e_i.x - display_scroll_x, e_i.y - display_scroll_y))
+                if d is None or d_i < d:
+                    e = e_i
+                    d = d_i
+            pygame.draw.line(p.display, (255, 255, 255), (p.x - display_scroll_x, p.y - display_scroll_y),
+                             (e.x - display_scroll_x, e.y - display_scroll_y), 5)
+
+    def draw_dev_view_objects(self, display_scroll_x, display_scroll_y):
+        if len(self.enemies) < 1:
+            return
+        self.dev_view_draw_line_to_close_enemies(display_scroll_x, display_scroll_y)
+        self.dev_view_draw_view_circle(display_scroll_x, display_scroll_y)
+        # draw a line from the player to the closest enemy
+        p = self.players[0]
+        e = None
+        d = None
+        for e_i in self.enemies:
+            d_i = math.dist((p.x, p.y), (e_i.x - display_scroll_x, e_i.y - display_scroll_y))
+            if d is None or d_i < d:
+                e = e_i
+                d = d_i
+        pygame.draw.line(p.display, (255, 255, 255), (p.x, p.y), (e.x - display_scroll_x, e.y - display_scroll_y), 5)
+
     def draw(self, display_scroll_x, display_scroll_y):
         self.remove_dead_objects()
         self.move_enemies()
         self.move_companions()
         self.enemies_fire_projectiles()
         self.companions_fire_projectiles()
+        if self.dev_view:
+            self.draw_dev_view_objects(display_scroll_x, display_scroll_y)
+
         if self.draw_trees:
             for tree in self.trees:
                 tree.draw(display_scroll_x, display_scroll_y)
@@ -159,3 +217,4 @@ class World:
             projectile.draw(display_scroll_x, display_scroll_y)
         for player in self.players:
             player.draw()
+

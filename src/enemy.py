@@ -12,7 +12,7 @@ class Enemy:
 
     def __init__(self, display, enemy_images, hit_sound, ai: AI, display_scroll_x: int, display_scroll_y: int, speed=1,
                  dev_view=False, live_max=100, uses_projectiles=False, cool_down_timer=1000, projectile_images=None,
-                 shot_sound=None, drop_foot_chane=0.0, loot=None):
+                 shot_sound=None, drop_foot_chane=0.0, loot=None, view_range=50):
         self.x = None
         self.y = None
         self.animation_images = enemy_images
@@ -46,6 +46,8 @@ class Enemy:
         self.shot_sound = shot_sound
         self.drop_foot_chane = drop_foot_chane
         self.loot = loot
+        self.view_range = view_range
+        self.hit_sound_cool_down = 0
 
     def spawn(self, display_scroll_x, display_scroll_y):
         self.x = display_scroll_x
