@@ -127,7 +127,7 @@ class AI:
         return (center_x / n), (center_y / n)
 
     def swarm_ai(self, player, enemy, other_enemies, avoid_factor=1):
-        # this is still not how I want it.  
+        # this is still not how I want it.
         ex = enemy.x - player.display_scroll_x
         ey = enemy.y - player.display_scroll_y
         sx, sy = player.display_scroll_x, player.display_scroll_y
