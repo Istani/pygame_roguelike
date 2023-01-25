@@ -1,10 +1,10 @@
 import random
 import math
-
+import pygame
 
 class AI:
 
-    def __init__(self, ai_type=1):
+    def __init__(self, ai_type=1, dev_view=False):
         self.offset_min = -300
         self.move_offset_max = 300
         self.reset_counter_min = 120
@@ -14,6 +14,7 @@ class AI:
         self.reset_counter = None
         self.reset()
         self.ai_type = ai_type
+        self.dev_view = dev_view
 
     def reset(self):
         self.offset_x = random.randrange(self.offset_min, self.move_offset_max)
@@ -105,12 +106,9 @@ class AI:
         return x_vel, y_vel
 
     @staticmethod
-    def __move_towards_player_velocity(enemy, player, center=None):
-        if center is not None:
-            x_dist, y_dist = center
-        else:
-            x_dist = enemy.rect.centerx - player.rect.centerx
-            y_dist = enemy.rect.centery - player.rect.centery
+    def __move_towards_player_velocity(enemy, player):
+        x_dist = enemy.rect.centerx - player.rect.centerx
+        y_dist = enemy.rect.centery - player.rect.centery
         velocity = enemy.speed
         dist = (x_dist ** 2 + y_dist ** 2) ** 0.5
         if dist == 0:
@@ -129,20 +127,27 @@ class AI:
         return (center_x / n), (center_y / n)
 
     def swarm_ai(self, player, enemy, other_enemies, avoid_factor=1):
+        # this is still not how I want it.  
         ex = enemy.x - player.display_scroll_x
+        ey = enemy.y - player.display_scroll_y
         sx, sy = player.display_scroll_x, player.display_scroll_y
         other_enemies = [e for e in other_enemies if e != enemy]
         other_enemies = [e for e in other_enemies if
-                         math.dist((e.x + sx, e.y + sy), (enemy.x + sx, enemy.y + sy)) < 100]
+                         math.dist((e.x + sx, e.y + sy), (enemy.x + sx, enemy.y + sy)) < enemy.view_range]
         n = len(other_enemies)
-        if  n > 1 and random.random() < 0.5:
-            cx , cy = self.__center_of_group(other_enemies)
+        if  n > 1:
+            cx , cy = self.__center_of_group(other_enemies +[enemy])
             cx -= player.display_scroll_x
             cy -= player.display_scroll_y
-            x_vel, y_vel = self.__move_towards_player_velocity(enemy, player=None,
-                                                               center=(cx, cy))
-            enemy.x += x_vel
-            enemy.y += y_vel
+
+            angle = math.atan2(cx - ex, cy - ey)
+            x_vel = math.cos(angle)
+            y_vel = math.cos(angle)
+            if self.dev_view:
+                pygame.draw.line(enemy.display, (0, 0, 255), (ex, ey),
+                                 (cx, cy), 5)
+            enemy.x -= x_vel
+            enemy.y -= y_vel
         else:
             x_vel, y_vel = self.__move_towards_player_velocity(enemy, player)
             enemy.x -= x_vel
