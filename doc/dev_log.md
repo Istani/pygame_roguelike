@@ -34,4 +34,10 @@ The game now looks a good deal better.
 I was able to implement the automatic firing of the player's guns. But I couldn't get it to fire automatically to the
 next opponent. The problem is the scroll of the screen shifts the coordinates and it is not so easy to adjust a distance
 function. It should be reworked as soon as possible how the coordinates of enemies and the player are determined.
-preferably all on a single map. How to then move the camera I have to think about. 
+preferably all on a single map. How to then move the camera I have to think about.
+
+### 25.01.23
+
+I've spent a few days trying to figure out how to get the enemies to spread out better, but I'm not really satisfied. I
+should rethink this from scratch when I'm not tired from work. Tomorrow I'll start doing some simple visual things
+again.  
