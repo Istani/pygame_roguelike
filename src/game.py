@@ -18,7 +18,8 @@ from src.companion import Companion
 
 class Game:
 
-    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False, auto_fire=False, no_music=False):
+    def __init__(self, wight=1920, height=1200, fps=60, dev_view=False, use_player_gui=False, auto_fire=False,
+                 no_music=False):
         self.dev_view = dev_view
         self.player_name = os.environ.get('USERNAME')
         pygame.font.init()
@@ -57,10 +58,6 @@ class Game:
         self.gui = GUI(self.display, self.player, center=[self.center_x, self.center_y])
         self.word = World(assets=self.assets, dev_view=self.dev_view)
         self.word.players.append(self.player)
-
-        for _ in range(self.n_trees):
-            self.word.trees.append(Tree(display=self.display, x=random.randint(0, self.wight),
-                                        y=random.randint(0, self.height), image=self.assets.tree))
         self.state = State()
 
     def spawn_random_enemy(self):

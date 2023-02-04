@@ -1,6 +1,7 @@
 class NatureObject:
 
     def __init__(self, image, display, x, y):
+        # NatureObjects are currently not in the game
         self.image = image
         self.display = display
         self.x = x

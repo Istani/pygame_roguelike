@@ -15,7 +15,6 @@ class Assets:
         # sounds
         self.background_music = pygame.mixer.Sound("assets/sounds/ohyeah.wav")
         self.hit_sound = pygame.mixer.Sound("assets/sounds/aua.wav")
-        self.tree = pygame.image.load("assets/environment/tree.png")
         self.hit_0 = pygame.mixer.Sound("assets/sounds/hit_0.wav")
         self.hit_1 = pygame.mixer.Sound("assets/sounds/hit_1.wav")
         self.hit_2 = pygame.mixer.Sound("assets/sounds/hit_2.wav")
@@ -47,7 +46,6 @@ class Assets:
         self.auto_shoot = [self.projectile_tile.tile_table[i][9] for i in range(27, 31)]
 
     def preprocess_images(self):
-        self.tree = pygame.transform.scale(self.tree, (150, 250))
         self.player_images = [pygame.transform.scale(img, (42, 52)) for img in self.player_images]
         self.slime_images = [pygame.transform.scale(img, (32, 32)) for img in self.slime_images]
         self.snake_images = [pygame.transform.scale(img, (64, 64)) for img in self.snake_images]
@@ -57,8 +55,6 @@ class Assets:
         self.projectiles_player = [pygame.transform.scale(img, (32, 32)) for img in self.projectiles_player]
         self.auto_shoot = [pygame.transform.scale(img, (32, 32)) for img in self.auto_shoot]
 
-
-        # convert alpha
         self.button_resume_img = self.button_resume_img.convert_alpha()
         self.button_options_img = self.button_options_img.convert_alpha()
         self.button_quit_img = self.button_quit_img.convert_alpha()

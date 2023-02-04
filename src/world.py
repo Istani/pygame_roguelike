@@ -4,16 +4,15 @@ import pygame.draw
 import math
 
 from src.projectile import CompanionProjectile
-from src.ai import  AI
+from src.ai import AI
+
 
 class World:
 
-    def __init__(self, assets, draw_trees=False, dev_view=False):
+    def __init__(self, assets, dev_view=False):
         self.enemies = []
         self.players = []
         self.projectiles = []
-        self.trees = []
-        self.draw_trees = draw_trees
         self.assets = assets
         self.enemies_projectiles = []
         self.dev_view = dev_view
@@ -146,9 +145,6 @@ class World:
         self.items = [i for i in self.items if i.alive]
         self.companions = [c for c in self.companions if c.alive]
 
-    def remove_out_of_screen_projectiles(self):
-        pass
-
     def dev_view_draw_view_circle(self, display_scroll_x, display_scroll_y):
         for enemy in self.enemies:
             x = enemy.x + (enemy.rect.width //2) - display_scroll_x
@@ -200,9 +196,6 @@ class World:
         if self.dev_view:
             self.draw_dev_view_objects(display_scroll_x, display_scroll_y)
 
-        if self.draw_trees:
-            for tree in self.trees:
-                tree.draw(display_scroll_x, display_scroll_y)
         for projectile in self.projectiles:
             projectile.draw(display_scroll_x, display_scroll_y)
         for projectile in self.companion_projectiles:
