@@ -41,3 +41,7 @@ preferably all on a single map. How to then move the camera I have to think abou
 I've spent a few days trying to figure out how to get the enemies to spread out better, but I'm not really satisfied. I
 should rethink this from scratch when I'm not tired from work. Tomorrow I'll start doing some simple visual things
 again.  
+
+
+### 04.02.23
+At the moment I'm more interested in other projects. Therefore, for the time being, no more development will be done. 
