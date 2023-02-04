@@ -8,7 +8,6 @@ from src.assets import Assets
 from src.player import Player
 from src.gui import GUI
 from src.projectile import Projectile
-from src.natureobject import Tree
 from src.enemy import SnakeEnemy, RockEnemy, AssEnemy, SlimeEnemy
 from src.menu import Menu
 from src.state import State

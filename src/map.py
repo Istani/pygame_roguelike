@@ -3,20 +3,9 @@ import random
 import pygame
 
 
-def select_random_tiles(n_random_objects=5):
-    objects = []
-    for _ in range(n_random_objects):
-        r = random.randint(11, 13)
-        c = random.randint(0, 24)
-        if r == 11:
-            c = random.randint(10, 24)
-        objects.append((c, r))
-    return objects
-
-
 class Map:
 
-    def __init__(self, tile_table, tile_size=32, scale=3):
+    def __init__(self, tile_table, tile_size=32, scale=3, random_sprites=False):
         self.tile_table = tile_table
         self.tile_size = tile_size
         self.scale = scale
@@ -30,10 +19,11 @@ class Map:
         self.place = [[self.noise([i / self.n_row, j / self.n_cols]) for j in range(self.n_cols)] for i in
                       range(self.n_row)]
 
-        self.grass_tile_row = random.randint(0, 9)
-        self.grass_tile_column = random.randint(0, 10)
-
-        self.objects = select_random_tiles(5)
+        self.random_sprites = random_sprites
+        self.grass_tile_row = None
+        self.grass_tile_column = None
+        self.objects = None
+        self.select_map_tiles()
         self.__init_map()
 
     def __init_map(self):
@@ -54,6 +44,26 @@ class Map:
                     tile_row, tile_column = self.grass_tile_row, self.grass_tile_column
                 self.object_draw.append(
                     (self.tile_table[tile_row][tile_column], (x * self.tile_size, y * self.tile_size)))
+
+    def select_map_tiles(self):
+        n_tiles = 5
+        if self.random_sprites:
+            self.select_random_tiles(n_tiles)
+        else:
+            self.grass_tile_row, self.grass_tile_column = 2, 7
+            l = [(20, 11), (21, 11), (17, 11),(11, 11), (None, None)]
+            self.objects = l[::-1]
+
+    def select_random_tiles(self, n_random_objects):
+        self.grass_tile_row = random.randint(0, 9)
+        self.grass_tile_column = random.randint(0, 10)
+        self.objects = []
+        for _ in range(n_random_objects):
+            r = random.randint(11, 13)
+            c = random.randint(0, 24)
+            if r == 11:
+                c = random.randint(10, 24)
+            self.objects.append((c, r))
 
     def draw(self, screen, display_scroll_x, display_scroll_y):
         for obj in self.object_draw:
