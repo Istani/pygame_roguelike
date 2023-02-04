@@ -1,73 +1,31 @@
-![game](doc/game_img.png)
+# 2D Action Survival Game 
+This project is a small game in Python and shows my first steps with Pygame and game development in general. 
+The game can be classified as action roguelike, uses pixel graphics and is in 2D.
+It is still under development but the following features are already available: 
+- The map is procedurally generated for each game. 
+- Camera scrolling and 
+- The player as well as some enemies can shoot projectiles, these have a knock back. 
+- There are items that are dropped by enemies and can be collected by the player to restore life. 
+- There are different game AI and the enemies try not to get too close.
+- The game can summon NPC characters to assist you. 
 
-# pygame_roguelike
+![game](doc/game_pic_1.png)
 
-Action roguelike in python with pygame engine.
+## How to play 
+- You move with W,A,S and D. 
+- With left click you shoot projectiles.
+- With right click you summon helpers.
 
-To play the game, install the packages listed in requirements.txt and run the play.py script.
+At the moment the game is not really at a level where it is challenging or fun in the long run. 
 
-# PLANING
 
-## Next to implement
-1. remove unused stuff
-2. Big asset rework: different assets for companions, enemies and player 
-3. Attack animations 
+## How to install 
+Install the pip packets listed in the `requirements.txt` and run `play.py`. 
 
-## Coming Soon
-- Enemy and Player Rework (inheritance from sprite.Sprite)
-- Movement reword (use vectors)
-- Better map design and less randomness
-- better main menu
-- Leaderboard
-- map borders
-- class to manage font styles
-- Enemies get different velocities on axis (snake is get better vertical speed)
-- better auto aim (fire to the next enemy)
 
-## later
-- Big rework how coordinates a calculated (remove display scroll)
-- Support for different resolutions and full screen
-- Save games
+## Thanks for the help  
+- Sascha - has contributed some code.
+- Dennis -  played the background music by himself. 
+- Tobi - painted a few enemies. 
 
-## Maybe later
-
-- Build system
-- Controller support
-- Multiplayer
-
-# Bugs
-
-- Companion sprites stack
-- Sometimes enemy tremble because the change direction on each frame.
-- No third try when playing (Respawn player Bug).
-- player knock-back don`t work atm (maybe drop it, not sure)
-
-# Sound design
-
-- eat sound for picking up items that restore live points.
-- item dropped sound
-
-## Done (but still not perfect)
-
-- Enemies keep distance to each other (still needs improvement)
-- bots as companions
-- Health bars
-- better movement AI
-- Monsters do not spawn off-screen - FIXED
-- Collision with player is buggy - FIXED
-- Debug view, coordinates over object and more info
-- more env objects (like trees)
-- pysics, knock-back
-- enemy projectiles
-- Kill projectiles that are out of the map - FIXED
-- fixed map size
-- different projectiles
-- Better peng sound
-- player projectiles move with the player - FIXED
-- player Items
-- auto aim bot
-- BUG: something is wrong with the enemy knock-back from companion projectiles
-
-# Thanks for the inspiration
-
-[ScriptLine Studios - Pygame Top Down Shooter Tutorial](https://youtu.be/sVbFS9qEl4Y)
+Any kind of help is welcome.
