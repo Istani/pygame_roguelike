@@ -3,7 +3,7 @@ This project is a small game in Python and shows my first steps with Pygame and 
 The game can be classified as action roguelike, uses pixel graphics and is in 2D.
 It is still under development but the following features are already available: 
 - The map is procedurally generated for each game. 
-- Camera scrolling and 
+- Camera scrolling and a debug view.
 - The player as well as some enemies can shoot projectiles, these have a knock back. 
 - There are items that are dropped by enemies and can be collected by the player to restore life. 
 - There are different game AI and the enemies try not to get too close.
